@@ -14,6 +14,7 @@ Hotel Booking Cancellation Prediction: A Leakage-Aware Evaluation with Temporal 
 pip install -r requirements.txt
 python code/run_experiments.py   # E1–E4 主實驗，輸出 results/*.csv、results/fig_*.png
 python code/run_extra.py         # 門檻、bootstrap 與對照分析（須在上一步之後執行）
+python code/run_overlap.py       # 重複列分群與時間組成分析（須在第一步之後執行）
 ```
 
 原始結果於 Windows 11、Python 3.13.3、AMD Ryzen 5 7535HS（CPU）產生；套件版本見 `requirements.txt`。隨機種子固定為 42–46。在不同作業系統或 CPU 上，LightGBM 與 Random Forest 的結果可能在小數點後第三位有些微差異。
@@ -24,6 +25,7 @@ python code/run_extra.py         # 門檻、bootstrap 與對照分析（須在�
 |---|---|
 | `code/run_experiments.py` | 資料清理、前處理、三種模型（Logistic Regression、Random Forest、LightGBM）、E1–E4 實驗、錯誤分析與圖表 |
 | `code/run_extra.py` | RQ1 成對差異、E2 門檻對照、驗證集選門檻、E4 bootstrap、固定輪數、季節對照、去重後依訂金類型分析 |
+| `code/run_overlap.py` | 測試列是否在訓練集有相同列之分群 F1、訓練期與測試期組成比較 |
 | `code/make_framework_fig.py` | 報告圖 3-1 研究架構圖 |
 | `data/hotel_bookings.csv` | 原始資料（119,390 筆 × 32 欄） |
 | `results/` | 執行結果（csv、png、run_log.json） |

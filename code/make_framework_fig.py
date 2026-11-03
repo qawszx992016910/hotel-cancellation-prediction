@@ -5,10 +5,10 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import FancyBboxPatch
 plt.rcParams["font.sans-serif"] = ["Microsoft JhengHei", "Noto Sans CJK TC", "Noto Sans CJK JP", "DejaVu Sans"]
 boxes = [
-    ("資料蒐集", ["Kaggle Hotel Booking", "Demand（CC BY 4.0）", "119,390 筆、32 欄"]),
+    ("資料集", ["Kaggle Hotel Booking", "Demand（CC BY 4.0）", "119,390 筆、32 欄"]),
     ("資料前處理", ["刪除洩漏欄位", "異常值與缺失值", "衍生特徵、編碼", "（只以訓練集擬合）"]),
-    ("模型建構", ["Baseline：LR、RF", "提出方法：LightGBM", "5 個隨機種子"]),
-    ("模型評估", ["E1 模型比較", "E2 類別權重", "E3 洩漏與重複列", "E4 時間切分"]),
+    ("模型設計", ["Baseline：LR、RF", "提出方法：LightGBM", "5 個隨機種子"]),
+    ("實驗設計與\n評估指標", ["E1 模型比較", "E2 類別權重", "E3 洩漏與重複列", "E4 時間切分"]),
     ("錯誤分析與\n應用展示", ["錯誤案例特徵", "特徵重要度", "期末評估工具"]),
 ]
 fig, ax = plt.subplots(figsize=(11.3, 3.6), dpi=200)

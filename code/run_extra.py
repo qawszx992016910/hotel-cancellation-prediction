@@ -97,13 +97,24 @@ def main():
     thr_time = vthr[vthr.split == "時間"].set_index("model").thr
 
     # ---- 4. bootstrap ----
-    rng = np.random.default_rng(42)
+    # 抽樣單位：單列（列獨立假設），以及「完全重複列群組」（同組列一起抽，較保守）
     B, n = 2000, len(yt)
+    dup_cols = [c for c in te.columns if c not in R.DUP_COLS_EXCLUDE]
+    gid = te.groupby(dup_cols, dropna=False, sort=False).ngroup().values
+    order = np.argsort(gid, kind="stable")
+    bounds = np.flatnonzero(np.diff(gid[order])) + 1
+    groups = np.split(order, bounds)
+    print(f"E4 test rows {n}, duplicate groups {len(groups)}")
     rows = []
-    for label, tl, tg in [("門檻 0.5", 0.5, 0.5), ("驗證集選門檻", thr_time["LightGBM"], thr_time["LogisticRegression"])]:
+    for unit in ["單列", "重複列群組"]:
+      rng = np.random.default_rng(42)
+      for label, tl, tg in [("門檻 0.5", 0.5, 0.5), ("驗證集選門檻", thr_time["LightGBM"], thr_time["LogisticRegression"])]:
         dF, dA = [], []
         for _ in range(B):
-            i = rng.integers(0, n, n)
+            if unit == "單列":
+                i = rng.integers(0, n, n)
+            else:
+                i = np.concatenate([groups[g] for g in rng.integers(0, len(groups), len(groups))])
             y = yt[i]
             dF.append(f1_score(y, (tp["LightGBM"][i] >= tl).astype(int)) -
                       f1_score(y, (tp["LogisticRegression"][i] >= tg).astype(int)))
@@ -112,7 +123,7 @@ def main():
             arr = np.array(arr)
             point = (f1_score(yt, (tp["LightGBM"] >= tl).astype(int)) - f1_score(yt, (tp["LogisticRegression"] >= tg).astype(int))
                      if met == "F1" else roc_auc_score(yt, tp["LightGBM"]) - roc_auc_score(yt, tp["LogisticRegression"]))
-            rows.append(dict(threshold=label, metric=met, diff_LGBM_minus_LR=point,
+            rows.append(dict(unit=unit, threshold=label, metric=met, diff_LGBM_minus_LR=point,
                              ci_low=np.percentile(arr, 2.5), ci_high=np.percentile(arr, 97.5), B=B))
     pd.DataFrame(rows).round(4).to_csv(OUT / "e4_bootstrap.csv", index=False)
 
