@@ -1,0 +1,5 @@
+comparison,metric,mean,min,max,n_positive,n
+LightGBM − RandomForest,f1,0.0165,0.0146,0.0192,5,5
+LightGBM − RandomForest,auc_roc,0.0018,0.0013,0.0021,5,5
+LightGBM − LogisticRegression,f1,0.0822,0.0781,0.0871,5,5
+LightGBM − LogisticRegression,auc_roc,0.0645,0.0619,0.0658,5,5

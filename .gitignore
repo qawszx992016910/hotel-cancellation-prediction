@@ -1,0 +1,12 @@
+/*
+!/.gitignore
+!/README.md
+!/requirements.txt
+!/hotel_cancellation_colab.ipynb
+!/code/
+!/data/
+!/results/
+/code/build_docx.py
+/code/__pycache__/
+/results/preds/
+/results/*stdout*.txt

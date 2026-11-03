@@ -1,0 +1,4 @@
+model,n,precision,recall,f1
+LightGBM,12590.0,0.8389,0.7287,0.7799
+LogisticRegression,12590.0,0.8051,0.6111,0.6948
+RandomForest,12590.0,0.8644,0.6795,0.7609

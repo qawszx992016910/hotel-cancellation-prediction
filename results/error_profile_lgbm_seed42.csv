@@ -1,0 +1,5 @@
+type,lead_time,adr,total_of_special_requests,required_car_parking_spaces,previous_cancellations,booking_changes,total_nights,n,non_refund_share
+FN,81.684,113.318,0.827,0.0,0.005,0.22,3.593,1707,0.0006
+FP,110.793,118.771,0.422,0.086,0.012,0.1,4.031,782,0.0026
+TN,78.174,98.684,0.734,0.098,0.018,0.299,3.362,10470,0.0012
+TP,166.556,103.728,0.159,0.0,0.296,0.057,3.429,4923,0.4461

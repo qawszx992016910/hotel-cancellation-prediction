@@ -1,0 +1,17 @@
+level,feature,n,cancel_rate,recall,precision,f1
+City Hotel,hotel,11780.0,0.4193,0.7791,0.8775,0.8254
+Resort Hotel,hotel,6102.0,0.2771,0.6357,0.8144,0.714
+No Deposit,deposit_type,15644.0,0.283,0.6149,0.7773,0.6866
+Non Refund,deposit_type,2212.0,0.9932,0.9995,0.9991,0.9993
+Refundable,deposit_type,26.0,0.2308,0.8333,1.0,0.9091
+Aviation,market_segment,31.0,0.1613,0.2,1.0,0.3333
+Complementary,market_segment,115.0,0.113,0.2308,0.6,0.3333
+Corporate,market_segment,828.0,0.1606,0.6466,0.9149,0.7577
+Direct,market_segment,1891.0,0.1539,0.2543,0.7872,0.3844
+Groups,market_segment,3000.0,0.6117,0.945,0.9786,0.9615
+Offline TA/TO,market_segment,3644.0,0.3433,0.8209,0.9689,0.8888
+Online TA,market_segment,8373.0,0.3705,0.6441,0.7458,0.6912
+Contract,customer_type,615.0,0.3057,0.7234,0.9784,0.8318
+Group,customer_type,81.0,0.1235,0.6,1.0,0.75
+Transient,customer_type,13418.0,0.4083,0.7359,0.8488,0.7883
+Transient-Party,customer_type,3768.0,0.2532,0.7862,0.9248,0.8499

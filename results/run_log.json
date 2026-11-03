@@ -1,0 +1,50 @@
+{
+  "raw_rows": 119390,
+  "removed_zero_guests": 180,
+  "removed_negative_adr": 1,
+  "clean_rows": 119209,
+  "split_sizes_seed42": {
+    "train": 83446,
+    "val": 17881,
+    "test": 17882
+  },
+  "cancel_rate_seed42": {
+    "train": 0.37076672338997674,
+    "val": 0.37078463173200604,
+    "test": 0.3707638966558551
+  },
+  "dedup": {
+    "rows_after": 87229,
+    "removed": 31980,
+    "cancel_rate_after": 0.2752410322255213,
+    "removed_cancel_rate": 0.6313320825515948
+  },
+  "temporal_split": {
+    "train": 64114,
+    "val": 14476,
+    "test": 40619,
+    "train_period": "2015-07-01~2016-09-30",
+    "val_period": "2016-10-01~2016-12-31",
+    "test_period": "2017-01-01~2017-08-31",
+    "cancel_rate": {
+      "train": 0.3575194185357332,
+      "val": 0.38290964354794144,
+      "test": 0.38735567099140794
+    }
+  },
+  "environment": {
+    "python": "3.13.3",
+    "sklearn": "1.8.0",
+    "pandas": "3.0.6",
+    "lightgbm": "4.7.0",
+    "numpy": "2.4.4",
+    "os": "Windows-11-10.0.26200-SP0",
+    "seeds": [
+      42,
+      43,
+      44,
+      45,
+      46
+    ]
+  }
+}
