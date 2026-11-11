@@ -139,7 +139,9 @@ document.querySelectorAll("#tabs button").forEach(b => b.onclick = () => {
   b.classList.add("on"); $("#" + b.dataset.p).classList.add("on");
   try { localStorage.setItem("tab", b.dataset.p); } catch (e) {}
 });
-try { const t = localStorage.getItem("tab"); if (t) document.querySelector(`#tabs button[data-p="${t}"]`)?.click(); } catch (e) {}
+const QS = new URLSearchParams(location.search);
+if (QS.get("theme")) document.documentElement.dataset.theme = QS.get("theme");
+try { const t = QS.get("tab") || localStorage.getItem("tab"); if (t) document.querySelector(`#tabs button[data-p="${t}"]`)?.click(); } catch (e) {}
 
 // ---------- 成果摘要 ----------
 (function () {
@@ -226,15 +228,18 @@ function runOne() {
     total_guests: num("adults") + num("children") + num("babies")});
   const p = predict(D.model, row), thr = D.model.thr, S = D.stats, base = S.base;
   const lead = LEAD.find(([u]) => num("lead_time") <= u)[1];
+  const pc = num("previous_cancellations") > 0 ? "有" : "無", sr = num("total_of_special_requests") > 0 ? "有" : "無";
   const facts = [
-    ["訂金類型", fd.deposit_type, S.deposit_type[fd.deposit_type]], ["市場區隔", fd.market_segment, S.market_segment[fd.market_segment]],
-    ["前置天數", lead, S.lead[lead]], ["過去曾取消", num("previous_cancellations") > 0 ? "有" : "無", S.prev_cancel[num("previous_cancellations") > 0 ? "有" : "無"]],
-    ["特殊需求", num("total_of_special_requests") > 0 ? "有" : "無", S.special[num("total_of_special_requests") > 0 ? "有" : "無"]],
+    ["訂金類型", fd.deposit_type, S.deposit_type[fd.deposit_type], fd.deposit_type],
+    ["市場區隔", fd.market_segment, S.market_segment[fd.market_segment], fd.market_segment],
+    ["前置天數", lead, S.lead[lead], "前置 " + lead],
+    ["過去取消紀錄", pc, S.prev_cancel[pc], pc === "有" ? "曾取消過" : "無取消紀錄"],
+    ["特殊需求", sr, S.special[sr], sr === "有" ? "有特殊需求" : "無特殊需求"],
   ].filter(f => f[2]);
   facts.sort((a, b) => Math.abs(b[2].mean - base) - Math.abs(a[2].mean - base));
   const lvl = p >= thr ? "高於門檻，建議列入聯繫名單" : "低於門檻";
   const comp = p >= base ? `高於訓練資料平均取消率（${pct(base)}）` : `低於訓練資料平均取消率（${pct(base)}）`;
-  const head = facts.slice(0, 2).map(f => `${f[1] === "有" || f[1] === "無" ? f[0] + f[1] : f[1]}`).join("、");
+  const head = facts.slice(0, 2).map(f => f[3]).join("、");
   const special = fd.deposit_type === "Non Refund" ? "<p class='note'>不退款訂單已收款，即使取消也不影響已收房款；請與一般訂單分開看待。</p>"
     : fd.market_segment === "Groups" ? "<p class='note'>團體訂單通常有合約與保證條款，請與一般訂單分開看待。</p>" : "";
   $("#out").innerHTML = `<div class="gauge ${p >= thr ? "hi" : "lo"}"><b>${pct(p)}</b>預測取消機率<br><span class="note">門檻 ${thr.toFixed(2)}：${lvl}</span></div>
