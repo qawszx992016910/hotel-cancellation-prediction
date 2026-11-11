@@ -236,7 +236,7 @@ def md_to_elems(md):
         elif re.match(r"^圖 \d-\d+　", ln):
             m = re.search(r"（(results/[^）]+\.png)）", ln)
             path = ROOT / m.group(1)
-            w = 15.5 if "retrain" in path.name else (14 if "demo" in path.name else 12)
+            w = 13.5 if "retrain" in path.name else (11.5 if "demo" in path.name else 11)
             out.append(picture(path, w))
             out.append(fcap(re.sub(r"（results/[^）]+）", "", ln)))
         elif ln.startswith("註："):
