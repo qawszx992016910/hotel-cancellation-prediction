@@ -344,9 +344,9 @@ replace_all("（見陸之二）", "（見參之八）")
 replace_all("依表 6-2 時程", "依表 7-2")
 replace_all("pandas 3.0.6（McKinney, 2010）", "pandas 3.0.6（McKinney, 2010）、holidays 0.108（Vacanza Team, n.d.）")
 replace_all("42（E4、bootstrap、錯誤分析）", "42（E4、bootstrap、錯誤分析）；期末 LightGBM 42、43、44")
-replace_all("摘要、壹至陸章、附錄 C 程式", "摘要、壹至柒章、附錄 C 程式（含期末 code/final_01～04、booking_eval.py 與網頁展示）")
+replace_all("摘要、壹至陸章、附錄 C 程式", "摘要、壹至柒章、附錄 C 程式（含期末 code/final_01～06、booking_eval.py 與網頁展示）")
 replace_all("組員重新執行 code/run_experiments.py、code/run_extra.py 與 code/run_overlap.py",
-            "組員重新執行 code/run_experiments.py、code/run_extra.py、code/run_overlap.py 與期末 code/final_01～04_*.py、code/booking_eval.py；網頁單筆預測以 300 筆與 Python 結果比對")
+            "組員重新執行 code/run_experiments.py、code/run_extra.py、code/run_overlap.py 與期末 code/final_01～06_*.py、code/booking_eval.py；網頁單筆預測以 300 筆與 Python 結果比對")
 replace_all("依序執行即重建 results/，CPU 約 30 至 60 分鐘", "依序執行即重建 results/，CPU 約 30 至 60 分鐘；期末第 6 至 8 節約 20 分鐘")
 replace_all("期中未製作", "未製作；改以網頁展示（見下列）")
 tc = doc.tables[-2]
@@ -367,6 +367,65 @@ for item, link, desc in [
             ps[0].remove(r)
         rs[0].find(qn("w:t")).text = val
     base_row.addnext(tr); base_row = tr
+
+
+# ---------- 8. 審查 F1 修正（期中留下的文字；見 drafts_final/審查紀錄_F1.md）----------
+FIX = [
+    ("以 E1 至 E4 四組實驗回答三個研究問題（第五、六節）",
+     "以 E1 至 E4 四組期中實驗（第五、六節）與期末 rolling-origin 實驗（第八節）回答五個研究問題"),
+    ("本研究的流程分為五個模組，名稱與本章各節對應。", "如圖 3-1 所示，本研究的流程分為五個模組，名稱與本章各節對應。"),
+    ("所有步驟寫在 code/run_experiments.py（E1 至 E4 主實驗）", "期中步驟寫在 code/run_experiments.py（E1 至 E4 主實驗）"),
+    ("執行方式與檔案連結列於附錄 C。",
+     "期末步驟寫在 code/final_01_rolling_origin.py 至 code/final_06_contact_time.py，評估工具與網頁展示為 code/booking_eval.py 與 code/build_demo.py；執行方式與檔案連結列於附錄 C。"),
+    ("如表 3-1 所示，取消訂單約佔四成", "如表 3-1 與圖 3-2 所示，取消訂單約佔四成"),
+    ("（含 3 個衍生特徵）", "（含 3 個衍生特徵：抵達月份數值、總住宿晚數、總人數）"),
+    ("三種模型使用相同的特徵與前處理（Logistic Regression 另加標準化），差異只在模型本身。本階段的超參數",
+     "表 3-2 為期中的模型設定，期末選定值見表 4-6。三種模型使用相同的特徵與前處理（Logistic Regression 另加標準化），差異只在模型本身。期中階段的超參數"),
+    ("E1 至 E3 皆採隨機分層切分", "表 3-3 列出期中四組實驗的設定。E1 至 E3 皆採隨機分層切分"),
+    ("本研究以「取消」為正類（positive class）", "表 3-4 列出評估指標的定義與選用理由。本研究以「取消」為正類（positive class）"),
+    ("本研究以驗證集提前停止控制樹的數量", "期中以驗證集提前停止控制樹的數量，期末改以 rolling-origin 驗證從網格選擇樹數（表 3-7）"),
+    ("方案 B 在實際上線與定期重新訓練上都比本專題完整",
+     "方案 B 在實際上線與自動化重新訓練上都比本專題完整（本專題只以離線方式模擬每季重新訓練）"),
+    ("並量化洩漏欄位、重複資料與切分方式對效能估計的影響。",
+     "並量化洩漏欄位、重複資料與切分方式對效能估計的影響；期末再以 rolling-origin 時間驗證與事先定義的選模規則檢驗模型對未來期間的表現，並將評估流程做成工具與網頁展示。"),
+    ("五、預期貢獻", "五、研究貢獻"),
+    ("說明本專題的需求、定位與風險。", "說明本專題的需求、定位與風險：需求優先序見表 5-1，SWOT 分析與策略見表 5-2、表 5-3，風險評估見表 5-4。"),
+    ("逐筆辨識無訂金訂單的重要性高，因為取消率達 12.2% 至 40.0%",
+     "逐筆辨識無訂金訂單的重要性高，因為各飯店的整體取消率達 12.2% 至 40.0%"),
+    ("期末加入「以相同特徵分組」的切分方式，確保相同的列不會同時出現在訓練集與測試集",
+     "期末以時間切分為主要評估（相同列抵達日相同，不跨期），bootstrap 以重複列群組為單位"),
+    ("調參與門檻只用驗證集；測試集只在最後評估一次",
+     "調參與門檻只用驗證集；正式方案在看期末測試結果前定案（此測試期期中已使用，見參之八）"),
+    ("依表 7-2，W13 前完成模型定版；", "期末先完成模型定版（表 7-2）；"),
+]
+for old, new in FIX:
+    replace_all(old, new)
+
+# 預期貢獻補期末貢獻段
+anchor = find_p(lambda t, el: t.startswith("在實務面，本研究比較類別權重"))
+insert_after(anchor, [body_p(
+    "期末的貢獻對應 RQ4、RQ5 與第陸章：（1）在公開資料上示範事先寫下的選模規則，並報告規則選出的模型在下一年被推翻，以及規則判定對驗證期組成的敏感度；"
+    "（2）指出每日聯繫名單若不排除聯繫時已取消的訂單，命中率會由 36.1% 被高估為 84.3%，並以聯繫時點仍有效的訂單評估；"
+    "（3）公開評估工具，並示範統計式洩漏檢查會漏掉影響最大的 country，必須搭配欄位確定時點清單（對應 RQ4、RQ5）。")])
+
+# 表 2-3 前加引用句
+cap = find_p(lambda t, el: t.startswith("表 2-3　"))
+cap.addprevious(body_p("表 2-3 整理前述文獻顯示的四項研究缺口，以及本研究對應的作法。"))
+
+# 表 2-2：本專題「每日或定期自動重新訓練」○ → ◐
+hit = 0
+for tb in doc.tables:
+    for row in tb.rows:
+        if row.cells[0].text.strip() == "每日或定期自動重新訓練":
+            c = row.cells[2].paragraphs[0]
+            assert c.text.strip() == "○"
+            replace_in_para(c, lambda s: s.replace("○", "◐")); hit += 1
+    if tb.rows[0].cells[0].text.strip() == "功能項目":
+        for p in tb._tbl.itersiblings():
+            if p.tag == qn("w:p") and ptext(p).startswith("註："):
+                replace_in_para(P(p, doc), lambda s: s.replace("－ 公開資料未說明。", "－ 公開資料未說明。本專題的重新訓練為離線模擬每季重新訓練（第肆章第三節），未自動化。", 1))
+                break
+assert hit == 1
 
 doc.save(OUT)
 print("saved", OUT)

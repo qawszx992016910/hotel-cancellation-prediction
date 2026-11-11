@@ -1,0 +1,25 @@
+comparison,setting,point,lo,hi
+LightGBM − LR,"主分析（B=2000, seed 2026）",0.0183,0.011,0.0249
+LightGBM − LR,bootstrap seed 1,0.0183,0.0112,0.0249
+LightGBM − LR,bootstrap seed 2,0.0183,0.0112,0.0248
+LightGBM − LR,bootstrap seed 3,0.0183,0.0112,0.0248
+LightGBM − LR,bootstrap seed 4,0.0183,0.0113,0.0247
+LightGBM − LR,bootstrap seed 5,0.0183,0.0113,0.0245
+LightGBM − LR,B=10000,0.0183,0.0112,0.0247
+LightGBM − LR,剔除 2015-10 起的驗證期,0.0198,0.0118,0.0271
+LightGBM − LR,剔除 2016-01 起的驗證期,0.0108,0.0049,0.0168
+LightGBM − LR,剔除 2016-04 起的驗證期,0.0081,-0.0,0.0153
+LightGBM − LR,剔除 2016-07 起的驗證期,0.0215,0.013,0.0299
+LightGBM − LR,剔除 2016-10 起的驗證期,0.0291,0.0207,0.0364
+LightGBM 6 個月 − 全部歷史,"主分析（B=2000, seed 2026）",0.0136,0.0099,0.0177
+LightGBM 6 個月 − 全部歷史,bootstrap seed 1,0.0136,0.0097,0.0176
+LightGBM 6 個月 − 全部歷史,bootstrap seed 2,0.0136,0.0096,0.0181
+LightGBM 6 個月 − 全部歷史,bootstrap seed 3,0.0136,0.0099,0.0179
+LightGBM 6 個月 − 全部歷史,bootstrap seed 4,0.0136,0.0097,0.0178
+LightGBM 6 個月 − 全部歷史,bootstrap seed 5,0.0136,0.0098,0.0178
+LightGBM 6 個月 − 全部歷史,B=10000,0.0136,0.0098,0.0177
+LightGBM 6 個月 − 全部歷史,剔除 2015-10 起的驗證期,0.0166,0.0118,0.0215
+LightGBM 6 個月 − 全部歷史,剔除 2016-01 起的驗證期,0.0159,0.011,0.0212
+LightGBM 6 個月 − 全部歷史,剔除 2016-04 起的驗證期,0.0142,0.0097,0.0194
+LightGBM 6 個月 − 全部歷史,剔除 2016-07 起的驗證期,0.0093,0.0057,0.0134
+LightGBM 6 個月 − 全部歷史,剔除 2016-10 起的驗證期,0.0098,0.0063,0.0137

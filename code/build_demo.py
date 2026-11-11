@@ -88,6 +88,10 @@ def daily_lists(df):
     cols = ["arrival_date", "hotel", "lead_time", "market_segment", "deposit_type", "customer_type", "adr",
             "total_nights", "total_guests", "p", TARGET]
     t = te[cols].copy()
+    # 取消日距抵達日天數（未取消為 -1）：只用於「聯繫時點」篩選，不是模型特徵
+    cd = (te.arrival_date - pd.to_datetime(te.reservation_status_date)).dt.days
+    t["cancel_days_before"] = np.where(te[TARGET] == 1, cd, -1).astype(int)
+    cols = cols + ["cancel_days_before"]
     t["arrival_date"] = t.arrival_date.dt.strftime("%Y-%m-%d")
     t["p"] = t.p.round(4); t["adr"] = t.adr.round(1)
     return {c: t[c].tolist() for c in cols}
@@ -146,6 +150,9 @@ console.log(JSON.stringify({n:S.length,max_abs_diff:mx}));"""
         print("node check:", r.stdout.strip(), r.stderr.strip()[:500])
         res = json.loads(r.stdout)
         assert res["max_abs_diff"] < 1e-6, res
+        (ROOT / "results" / "final" / "demo_check.json").write_text(json.dumps(dict(
+            runtime="node " + subprocess.run(["node", "--version"], capture_output=True, text=True).stdout.strip(),
+            **res), indent=2), encoding="utf-8")
     else:
         print("找不到 node，略過 JS 推論驗證")
     for f in ["_sample.json", "_check.js", "_model.json"]:

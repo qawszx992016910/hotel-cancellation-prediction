@@ -1,0 +1,9 @@
+model,plan,subset,n,f1
+LogisticRegression,訓練一次,全部,10233.0,0.6356
+LogisticRegression,訓練一次,排除不退款,10000.0,0.6132
+LogisticRegression,每季重新訓練,全部,10233.0,0.6503
+LogisticRegression,每季重新訓練,排除不退款,10000.0,0.6301
+LightGBM,訓練一次,全部,10233.0,0.5783
+LightGBM,訓練一次,排除不退款,10000.0,0.5464
+LightGBM,每季重新訓練,全部,10233.0,0.639
+LightGBM,每季重新訓練,排除不退款,10000.0,0.6146

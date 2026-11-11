@@ -26,6 +26,8 @@ python code/final_01_rolling_origin.py   # rolling-origin 時間驗證＋事先�
 python code/final_02_retraining.py       # 重新訓練策略：expanding／6 個月／3 個月視窗
 python code/final_03_features.py         # 衍生特徵：週末、葡萄牙國定假日、agent 歷史取消率
 python code/final_04_metrics.py          # 排除不退款 Recall、每日前 10% Precision、門檻—Recall 曲線
+python code/final_05_sensitivity.py      # 選模規則敏感度（逐一剔除驗證期、bootstrap 種子）、7–8 月排除不退款對照
+python code/final_06_contact_time.py     # 只計聯繫當天仍有效訂單的每日前 10% Precision
 python code/booking_eval.py --data data/hotel_bookings.csv --out results/eval_report   # 評估工具
 python code/build_demo.py                # 產生 demo/index.html（單檔網頁展示）
 ```
@@ -50,7 +52,7 @@ python code/build_demo.py                # 產生 demo/index.html（單檔網頁
 | `code/run_extra.py` | RQ1 成對差異、E2 門檻對照、驗證集選門檻、E4 bootstrap、固定輪數、季節對照、去重後依訂金類型分析 |
 | `code/run_overlap.py` | 測試列是否在訓練集有相同列之分群 F1、訓練期與測試期組成比較 |
 | `code/make_framework_fig.py` | 報告圖 3-1 研究架構圖 |
-| `code/final_01_rolling_origin.py`～`final_04_metrics.py` | 期末步驟 1–4 |
+| `code/final_01_rolling_origin.py`～`final_06_contact_time.py` | 期末階段 1–5（06 為階段 4 補充） |
 | `code/booking_eval.py` | 評估工具（單檔，可在 Colab 或命令列執行） |
 | `code/build_demo.py`、`demo_template.html`、`demo_model.js` | 網頁展示產生器與瀏覽器端推論 |
 | `demo/index.html` | 網頁展示 |

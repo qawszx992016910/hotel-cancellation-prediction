@@ -1,0 +1,230 @@
+{
+  "rule": [
+    {
+      "comparison": "LightGBM − LR",
+      "setting": "主分析（B=2000, seed 2026）",
+      "point": 0.0183,
+      "lo": 0.011,
+      "hi": 0.0249
+    },
+    {
+      "comparison": "LightGBM − LR",
+      "setting": "bootstrap seed 1",
+      "point": 0.0183,
+      "lo": 0.0112,
+      "hi": 0.0249
+    },
+    {
+      "comparison": "LightGBM − LR",
+      "setting": "bootstrap seed 2",
+      "point": 0.0183,
+      "lo": 0.0112,
+      "hi": 0.0248
+    },
+    {
+      "comparison": "LightGBM − LR",
+      "setting": "bootstrap seed 3",
+      "point": 0.0183,
+      "lo": 0.0112,
+      "hi": 0.0248
+    },
+    {
+      "comparison": "LightGBM − LR",
+      "setting": "bootstrap seed 4",
+      "point": 0.0183,
+      "lo": 0.0113,
+      "hi": 0.0247
+    },
+    {
+      "comparison": "LightGBM − LR",
+      "setting": "bootstrap seed 5",
+      "point": 0.0183,
+      "lo": 0.0113,
+      "hi": 0.0245
+    },
+    {
+      "comparison": "LightGBM − LR",
+      "setting": "B=10000",
+      "point": 0.0183,
+      "lo": 0.0112,
+      "hi": 0.0247
+    },
+    {
+      "comparison": "LightGBM − LR",
+      "setting": "剔除 2015-10 起的驗證期",
+      "point": 0.0198,
+      "lo": 0.0118,
+      "hi": 0.0271
+    },
+    {
+      "comparison": "LightGBM − LR",
+      "setting": "剔除 2016-01 起的驗證期",
+      "point": 0.0108,
+      "lo": 0.0049,
+      "hi": 0.0168
+    },
+    {
+      "comparison": "LightGBM − LR",
+      "setting": "剔除 2016-04 起的驗證期",
+      "point": 0.0081,
+      "lo": -0.0,
+      "hi": 0.0153
+    },
+    {
+      "comparison": "LightGBM − LR",
+      "setting": "剔除 2016-07 起的驗證期",
+      "point": 0.0215,
+      "lo": 0.013,
+      "hi": 0.0299
+    },
+    {
+      "comparison": "LightGBM − LR",
+      "setting": "剔除 2016-10 起的驗證期",
+      "point": 0.0291,
+      "lo": 0.0207,
+      "hi": 0.0364
+    },
+    {
+      "comparison": "LightGBM 6 個月 − 全部歷史",
+      "setting": "主分析（B=2000, seed 2026）",
+      "point": 0.0136,
+      "lo": 0.0099,
+      "hi": 0.0177
+    },
+    {
+      "comparison": "LightGBM 6 個月 − 全部歷史",
+      "setting": "bootstrap seed 1",
+      "point": 0.0136,
+      "lo": 0.0097,
+      "hi": 0.0176
+    },
+    {
+      "comparison": "LightGBM 6 個月 − 全部歷史",
+      "setting": "bootstrap seed 2",
+      "point": 0.0136,
+      "lo": 0.0096,
+      "hi": 0.0181
+    },
+    {
+      "comparison": "LightGBM 6 個月 − 全部歷史",
+      "setting": "bootstrap seed 3",
+      "point": 0.0136,
+      "lo": 0.0099,
+      "hi": 0.0179
+    },
+    {
+      "comparison": "LightGBM 6 個月 − 全部歷史",
+      "setting": "bootstrap seed 4",
+      "point": 0.0136,
+      "lo": 0.0097,
+      "hi": 0.0178
+    },
+    {
+      "comparison": "LightGBM 6 個月 − 全部歷史",
+      "setting": "bootstrap seed 5",
+      "point": 0.0136,
+      "lo": 0.0098,
+      "hi": 0.0178
+    },
+    {
+      "comparison": "LightGBM 6 個月 − 全部歷史",
+      "setting": "B=10000",
+      "point": 0.0136,
+      "lo": 0.0098,
+      "hi": 0.0177
+    },
+    {
+      "comparison": "LightGBM 6 個月 − 全部歷史",
+      "setting": "剔除 2015-10 起的驗證期",
+      "point": 0.0166,
+      "lo": 0.0118,
+      "hi": 0.0215
+    },
+    {
+      "comparison": "LightGBM 6 個月 − 全部歷史",
+      "setting": "剔除 2016-01 起的驗證期",
+      "point": 0.0159,
+      "lo": 0.011,
+      "hi": 0.0212
+    },
+    {
+      "comparison": "LightGBM 6 個月 − 全部歷史",
+      "setting": "剔除 2016-04 起的驗證期",
+      "point": 0.0142,
+      "lo": 0.0097,
+      "hi": 0.0194
+    },
+    {
+      "comparison": "LightGBM 6 個月 − 全部歷史",
+      "setting": "剔除 2016-07 起的驗證期",
+      "point": 0.0093,
+      "lo": 0.0057,
+      "hi": 0.0134
+    },
+    {
+      "comparison": "LightGBM 6 個月 − 全部歷史",
+      "setting": "剔除 2016-10 起的驗證期",
+      "point": 0.0098,
+      "lo": 0.0063,
+      "hi": 0.0137
+    }
+  ],
+  "jul_aug": [
+    {
+      "model": "LogisticRegression",
+      "plan": "訓練一次",
+      "subset": "全部",
+      "n": 10233.0,
+      "f1": 0.6356
+    },
+    {
+      "model": "LogisticRegression",
+      "plan": "訓練一次",
+      "subset": "排除不退款",
+      "n": 10000.0,
+      "f1": 0.6132
+    },
+    {
+      "model": "LogisticRegression",
+      "plan": "每季重新訓練",
+      "subset": "全部",
+      "n": 10233.0,
+      "f1": 0.6503
+    },
+    {
+      "model": "LogisticRegression",
+      "plan": "每季重新訓練",
+      "subset": "排除不退款",
+      "n": 10000.0,
+      "f1": 0.6301
+    },
+    {
+      "model": "LightGBM",
+      "plan": "訓練一次",
+      "subset": "全部",
+      "n": 10233.0,
+      "f1": 0.5783
+    },
+    {
+      "model": "LightGBM",
+      "plan": "訓練一次",
+      "subset": "排除不退款",
+      "n": 10000.0,
+      "f1": 0.5464
+    },
+    {
+      "model": "LightGBM",
+      "plan": "每季重新訓練",
+      "subset": "全部",
+      "n": 10233.0,
+      "f1": 0.639
+    },
+    {
+      "model": "LightGBM",
+      "plan": "每季重新訓練",
+      "subset": "排除不退款",
+      "n": 10000.0,
+      "f1": 0.6146
+    }
+  ]
+}

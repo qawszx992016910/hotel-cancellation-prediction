@@ -74,9 +74,10 @@ ul.ex{margin:6px 0;padding-left:20px}
 </section>
 
 <section id="daily" class="panel">
-  <p class="note">示範情境：飯店每天針對當日抵達的訂單，聯繫風險最高的前 10%。預測來自 2017 年每季重新訓練的 LightGBM（訓練只用該季之前的資料）。不退款與團體訂單已收款或有合約，另列於下方，不與一般訂單混排。「實際結果」為事後資料，只用於檢視名單準確度。</p>
+  <p class="note">示範情境：飯店在抵達前若干天，針對當時仍有效的訂單（已訂房且尚未取消）聯繫風險最高的前 10%。選「抵達當天（含已取消）」時名單會包含早已取消的訂單，命中率偏高，只供對照。預測來自 2017 年每季重新訓練的 LightGBM（訓練只用該季之前的資料）。不退款與團體訂單已收款或有合約，另列於下方，不與一般訂單混排。「實際結果」為事後資料，只用於檢視名單準確度。</p>
   <div class="controls">
     <label>抵達日<input type="date" id="d" min="2017-01-01" max="2017-08-31" value="2017-07-15"></label>
+    <label>聯繫時點<select id="dc"><option value="30" selected>抵達前 30 天</option><option value="14">抵達前 14 天</option><option value="7">抵達前 7 天</option><option value="0">抵達當天（含已取消）</option></select></label>
     <label>飯店<select id="dh"><option value="">全部</option><option>City Hotel</option><option>Resort Hotel</option></select></label>
   </div>
   <div class="card" id="dstat"></div>
@@ -122,16 +123,16 @@ try { const t = QS.get("tab") || localStorage.getItem("tab"); if (t) document.qu
   const ev = S.eval, g = (s, mo) => ev.find(x => x.setting === s && x.model === mo).f1;
   $("#kpis").innerHTML = [
     [f3(L.f1), "2017 測試期 F1（LightGBM，每季重新訓練）"],
-    [pct(L.top10_precision_daily_mean), `每日前 10% 訂單實際取消比例（基準 ${pct(L.base_cancel_rate)}）`],
+    ["36.1%", `抵達前 30 天仍有效訂單中，風險前 10% 最終取消比例（基準 13.8%；不排除已取消訂單時為 ${pct(L.top10_precision_daily_mean)}，會高估）`],
     [f3(L.excl_nonrefund_recall), "排除不退款訂單後的 Recall"],
     [f3(g("隨機切分", "LGBM") - g("時間切分", "LGBM")), "隨機切分比時間切分高估的 F1"],
   ].map(([b, s]) => `<div class="kpi"><b>${b}</b><span>${s}</span></div>`).join("");
   const sel = S.selection, d = sel.val_f1_diff_lgbm_minus_lr;
   $("#plan").innerHTML = `<ul class="ex">
-   <li><b>模型</b>：LightGBM（${sel.best_config.LightGBM.param} 葉、${sel.best_config.LightGBM.trees} 棵，門檻 ${sel.best_config.LightGBM.thr_mean.toFixed(2)}）。事先定義的規則：rolling-origin 驗證期 F1 差（LightGBM − Logistic Regression）的 95% 信賴區間下界須大於 0.01；結果為 ${f3(d.point)}，CI [${f3(d.ci95[0])}, ${f3(d.ci95[1])}]，通過。</li>
-   <li><b>重新訓練</b>：每季、使用全部歷史資料（expanding）。3／6 個月滑動視窗在驗證期未通過同一規則，列為探索性結果。</li>
-   <li><b>特徵</b>：維持基本特徵。agent 歷史取消率在驗證期有小而一致的改善，但未達 0.01 門檻；週末與國定假日特徵沒有幫助。</li>
-   <li><b>如實說明</b>：2017 測試期 Logistic Regression 的 F1（${f3(R.f1)}）高於 LightGBM（${f3(L.f1)}）；選擇只依驗證期，不依測試集改選。</li></ul>`;
+   <li><b>模型</b>：LightGBM（${sel.best_config.LightGBM.param} 葉、${sel.best_config.LightGBM.trees} 棵，門檻 ${sel.best_config.LightGBM.thr_mean.toFixed(2)}）。事先定義的規則：rolling-origin 驗證期 F1 差（LightGBM − Logistic Regression）的 95% 信賴區間下界須大於 0.01；結果為 ${f3(d.point)}，CI [${f3(d.ci95[0])}, ${f3(d.ci95[1])}]，勉強通過；剔除 2016 年 1–3 月或 4–6 月任一驗證期即不通過。</li>
+   <li><b>重新訓練</b>：每季、使用全部歷史資料（expanding）。3／6 個月訓練視窗在驗證期未通過同一規則（6 個月視窗落在門檻邊界），列為探索性結果。</li>
+   <li><b>特徵</b>：維持基本特徵。agent 歷史取消率只對 Logistic Regression 有小幅改善，LightGBM 五期平均反而略降；兩者與週末、國定假日特徵都未達 0.01 門檻。</li>
+   <li><b>如實說明</b>：2017 測試期 Logistic Regression 的 F1（${f3(R.f1)}）高於 LightGBM（${f3(L.f1)}）；選擇只依驗證期，不依測試結果改選；此測試期在期中已使用過。</li></ul>`;
   $("#evtab").innerHTML = table([{h: "評估方式", k: "setting"}, {h: "模型", k: "model"}, {h: "F1", f: r => f3(r.f1), r: 1},
     {h: "Precision", f: r => f3(r.precision), r: 1}, {h: "Recall", f: r => f3(r.recall), r: 1}, {h: "AUC", f: r => f3(r.auc), r: 1},
     {h: "門檻", f: r => (+r.thr).toFixed(2), r: 1}], ev) + `<p class="note">同一份資料、同樣的模型，只改變切分方式。隨機切分讓同一期間的訂單同時出現在訓練與測試，效能偏高；去重後再隨機切分則顯示重複列的影響。</p>`;
@@ -148,15 +149,16 @@ try { const t = QS.get("tab") || localStorage.getItem("tab"); if (t) document.qu
 // ---------- 每日聯繫名單 ----------
 const Lz = D.lists, N = Lz.p.length;
 function renderDaily() {
-  const day = $("#d").value, h = $("#dh").value, idx = [];
-  for (let i = 0; i < N; i++) if (Lz.arrival_date[i] === day && (!h || Lz.hotel[i] === h)) idx.push(i);
+  const day = $("#d").value, h = $("#dh").value, c = +$("#dc").value, idx = [];
+  const live = i => c === 0 || (Lz.lead_time[i] >= c && (Lz.cancel_days_before[i] < c));
+  for (let i = 0; i < N; i++) if (Lz.arrival_date[i] === day && (!h || Lz.hotel[i] === h) && live(i)) idx.push(i);
   const isNR = i => Lz.deposit_type[i] === "Non Refund", isG = i => Lz.market_segment[i] === "Groups";
   const gen = idx.filter(i => !isNR(i) && !isG(i)).sort((a, b) => Lz.p[b] - Lz.p[a]);
   const nr = idx.filter(isNR).sort((a, b) => Lz.p[b] - Lz.p[a]);
   const grp = idx.filter(i => !isNR(i) && isG(i)).sort((a, b) => Lz.p[b] - Lz.p[a]);
   const k = Math.ceil(gen.length * 0.10), topHit = gen.slice(0, k).filter(i => Lz.is_canceled[i] === 1).length;
   const genRate = gen.length ? gen.filter(i => Lz.is_canceled[i] === 1).length / gen.length : 0;
-  $("#dstat").innerHTML = gen.length ? `當日一般訂單 ${gen.length} 筆，聯繫前 10%（${k} 筆）中有 <b>${topHit}</b> 筆實際取消（${pct(topHit / k, 0)}）；當日一般訂單取消率 ${pct(genRate, 0)}。另有不退款 ${nr.length} 筆、團體 ${grp.length} 筆。`
+  $("#dstat").innerHTML = gen.length ? `${c ? `抵達前 ${c} 天仍有效的` : "當日"}一般訂單 ${gen.length} 筆，聯繫前 10%（${k} 筆）中有 <b>${topHit}</b> 筆實際取消（${pct(topHit / k, 0)}）；這些訂單的取消率 ${pct(genRate, 0)}。另有不退款 ${nr.length} 筆、團體 ${grp.length} 筆。`
     : "這一天沒有符合條件的訂單。";
   const cols = [{h: "#", f: (i, n) => n + 1, r: 1}, {h: "風險", f: i => `<div style="display:flex;gap:6px;align-items:center"><span style="width:44px;text-align:right">${pct(Lz.p[i], 0)}</span><div class="bar" style="flex:1"><i style="width:${Lz.p[i] * 100}%"></i></div></div>`},
     {h: "飯店", f: i => Lz.hotel[i]}, {h: "前置天數", f: i => Lz.lead_time[i], r: 1}, {h: "市場區隔", f: i => Lz.market_segment[i]},
@@ -169,7 +171,7 @@ function renderDaily() {
   try { localStorage.setItem("day", day); } catch (e) {}
 }
 try { const s = localStorage.getItem("day"); if (s) $("#d").value = s; } catch (e) {}
-$("#d").onchange = renderDaily; $("#dh").onchange = renderDaily; renderDaily();
+$("#d").onchange = renderDaily; $("#dh").onchange = renderDaily; $("#dc").onchange = renderDaily; renderDaily();
 
 // ---------- 單筆預測 ----------
 const C = D.choices;
