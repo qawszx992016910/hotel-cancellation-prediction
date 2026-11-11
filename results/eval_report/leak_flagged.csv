@@ -1,0 +1,9 @@
+﻿column,single_auc,extreme_levels,stat_flag,stat_reason,timing_level,timing_note,in_base,f1_gain_if_used,how,verdict
+booking_changes,0.5704,0,False,,可能含事後資訊,統計到入住或取消為止；預設保留，請看加回／刪除差,True,0.0025,刪除後的 F1 差（取負）,保留但檢查（第一層）
+reservation_status,1.0,3,True,"Canceled 取消率 100.0%（n=30,086）；Check-Out 取消率 0.0%（n=52,507）；No-Show 取消率 100.0%（n=853）；單欄 AUC 1.000",事後資訊,訂單最後狀態，Canceled／No-Show 直接對應答案,False,0.254,加回後的 F1 差,排除（第一層）
+country,0.701,0,False,,入住時才確定,訂房時多預設為葡萄牙，入住出示證件才更正,False,0.0411,加回後的 F1 差,排除（第一層）
+required_car_parking_spaces,0.5506,1,True,"1 取消率 0.0%（n=5,164）",入住時才確定,停車需求多在抵達時登記,False,0.0128,加回後的 F1 差,排除（第一層）
+arrival_date_year,0.5118,0,False,,不可外推,年份只有少數值，無法外推到未來,False,0.0101,加回後的 F1 差,排除（第一層）
+assigned_room_type,0.6047,0,False,,入住時才確定,實際分配房型，可能因超賣或客人要求改變,False,0.007,加回後的 F1 差,排除（第一層）
+reservation_status_date,0.7615,1,True,2015-01-01 取消率 100.0%（n=541）,事後資訊,最後狀態的日期,False,,日期字串欄位，未測,排除（第一層）
+deposit_type,0.6631,1,True,"Non Refund 取消率 99.4%（n=10,195）",,,True,0.0128,刪除後的 F1 差（取負）,需人工確認（第二層）

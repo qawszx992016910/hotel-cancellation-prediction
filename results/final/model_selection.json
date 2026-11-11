@@ -1,0 +1,57 @@
+{
+  "cutoffs": [
+    "2015-10-01",
+    "2016-01-01",
+    "2016-04-01",
+    "2016-07-01",
+    "2016-10-01"
+  ],
+  "seeds": [
+    42,
+    43,
+    44
+  ],
+  "n_boot": 2000,
+  "min_diff": 0.01,
+  "best_config": {
+    "LogisticRegression": {
+      "param": 0.1,
+      "trees": null,
+      "thr_mean": 0.36000000000000004,
+      "val_f1_fold_mean": 0.7029881440212561,
+      "val_auc_fold_mean": 0.8405333880958302
+    },
+    "LightGBM": {
+      "param": 15.0,
+      "trees": 100,
+      "thr_mean": 0.36000000000000004,
+      "val_f1_fold_mean": 0.71329064965638,
+      "val_auc_fold_mean": 0.8598423492149664
+    }
+  },
+  "val_f1_diff_lgbm_minus_lr": {
+    "point": 0.018291877986276888,
+    "ci95": [
+      0.011031799935006265,
+      0.024927096214920168
+    ]
+  },
+  "decision": "LightGBM",
+  "test_2017": {
+    "LightGBM": {
+      "f1": 0.6664,
+      "auc_roc": 0.8441,
+      "precision": 0.7635,
+      "recall": 0.5912,
+      "f1_at_0_5": 0.6388
+    },
+    "LogisticRegression": {
+      "f1": 0.6897,
+      "auc_roc": 0.828,
+      "precision": 0.6991,
+      "recall": 0.6806,
+      "f1_at_0_5": 0.6492
+    }
+  },
+  "runtime_min": 4.5
+}

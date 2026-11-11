@@ -1,0 +1,83 @@
+agent-rate check OK {'n_checked': 500, 'max_abs_rate_diff': 0.0, 'count_mismatch': 0, 'note': '自身抵達日 ≥ 訂房日，條件「抵達日 < 訂房日」必然排除自身'}
+val base LogisticRegression s42 12s
+val base LightGBM s42 32s
+val base LightGBM s43 49s
+val base LightGBM s44 67s
+val +calendar LogisticRegression s42 73s
+val +calendar LightGBM s42 89s
+val +calendar LightGBM s43 107s
+val +calendar LightGBM s44 125s
+val +agent LogisticRegression s42 132s
+val +agent LightGBM s42 154s
+val +agent LightGBM s43 173s
+val +agent LightGBM s44 191s
+val +both LogisticRegression s42 199s
+val +both LightGBM s42 218s
+val +both LightGBM s43 235s
+val +both LightGBM s44 253s
+test base LogisticRegression s42 F1=0.695
+test base LightGBM s42 F1=0.680
+test base LightGBM s43 F1=0.680
+test base LightGBM s44 F1=0.681
+test +calendar LogisticRegression s42 F1=0.691
+test +calendar LightGBM s42 F1=0.675
+test +calendar LightGBM s43 F1=0.676
+test +calendar LightGBM s44 F1=0.675
+test +agent LogisticRegression s42 F1=0.692
+test +agent LightGBM s42 F1=0.700
+test +agent LightGBM s43 F1=0.700
+test +agent LightGBM s44 F1=0.699
+test +both LogisticRegression s42 F1=0.693
+test +both LightGBM s42 F1=0.704
+test +both LightGBM s43 F1=0.693
+test +both LightGBM s44 F1=0.697
+{
+  "LogisticRegression:+calendar-base": {
+    "point": -0.0032000000000000917,
+    "ci95": [
+      -0.005803219591578368,
+      -0.0004686225257233516
+    ],
+    "passes_rule": false
+  },
+  "LogisticRegression:+agent-base": {
+    "point": 0.012399999999999967,
+    "ci95": [
+      0.006926048796827636,
+      0.016921303788486556
+    ],
+    "passes_rule": false
+  },
+  "LogisticRegression:+both-base": {
+    "point": 0.009399999999999964,
+    "ci95": [
+      0.003870382114484275,
+      0.013887409495316071
+    ],
+    "passes_rule": false
+  },
+  "LightGBM:+calendar-base": {
+    "point": 0.0022999999999999687,
+    "ci95": [
+      0.0003775072743045958,
+      0.004091062693592883
+    ],
+    "passes_rule": false
+  },
+  "LightGBM:+agent-base": {
+    "point": 0.0043999999999999595,
+    "ci95": [
+      0.0012590395746784454,
+      0.007466483344498733
+    ],
+    "passes_rule": false
+  },
+  "LightGBM:+both-base": {
+    "point": 0.00539999999999996,
+    "ci95": [
+      0.002468257300392736,
+      0.008460775851892295
+    ],
+    "passes_rule": false
+  }
+}

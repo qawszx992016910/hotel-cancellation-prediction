@@ -1,0 +1,168 @@
+{
+  "configs": {
+    "LogisticRegression": [
+      "LogisticRegression",
+      0.1
+    ],
+    "LightGBM": [
+      "LightGBM",
+      15,
+      100
+    ]
+  },
+  "val": [
+    {
+      "model": "LogisticRegression",
+      "window": "expanding",
+      "f1_pooled": 0.6941,
+      "f1_fold_mean": 0.703,
+      "auc_fold_mean": 0.8405,
+      "thr": 0.36
+    },
+    {
+      "model": "LightGBM",
+      "window": "expanding",
+      "f1_pooled": 0.7123,
+      "f1_fold_mean": 0.7133,
+      "auc_fold_mean": 0.8598,
+      "thr": 0.36
+    },
+    {
+      "model": "LogisticRegression",
+      "window": "sliding_6m",
+      "f1_pooled": 0.6926,
+      "f1_fold_mean": 0.7023,
+      "auc_fold_mean": 0.8394,
+      "thr": 0.34
+    },
+    {
+      "model": "LightGBM",
+      "window": "sliding_6m",
+      "f1_pooled": 0.7259,
+      "f1_fold_mean": 0.7262,
+      "auc_fold_mean": 0.865,
+      "thr": 0.3733
+    },
+    {
+      "model": "LogisticRegression",
+      "window": "sliding_3m",
+      "f1_pooled": 0.7046,
+      "f1_fold_mean": 0.7019,
+      "auc_fold_mean": 0.8387,
+      "thr": 0.42
+    },
+    {
+      "model": "LightGBM",
+      "window": "sliding_3m",
+      "f1_pooled": 0.7246,
+      "f1_fold_mean": 0.7181,
+      "auc_fold_mean": 0.8573,
+      "thr": 0.3733
+    }
+  ],
+  "val_diff_vs_expanding": {
+    "LogisticRegression:sliding_6m-expanding": {
+      "point": -0.0015000000000000568,
+      "ci95": [
+        -0.005389512008883782,
+        0.0024050577108252003
+      ]
+    },
+    "LogisticRegression:sliding_3m-expanding": {
+      "point": 0.010499999999999954,
+      "ci95": [
+        0.0030892215606029617,
+        0.017194627219021277
+      ]
+    },
+    "LightGBM:sliding_6m-expanding": {
+      "point": 0.013599999999999945,
+      "ci95": [
+        0.009909295293683416,
+        0.01770620214104071
+      ]
+    },
+    "LightGBM:sliding_3m-expanding": {
+      "point": 0.012299999999999978,
+      "ci95": [
+        0.007855076155305845,
+        0.017085152162544623
+      ]
+    }
+  },
+  "test_2017": [
+    {
+      "model": "LogisticRegression",
+      "plan": "static（2017-01 訓練一次）",
+      "f1": 0.6897,
+      "auc_roc": 0.828,
+      "precision": 0.6991,
+      "recall": 0.6806,
+      "thr": 0.36
+    },
+    {
+      "model": "LogisticRegression",
+      "plan": "每季重新訓練｜expanding",
+      "f1": 0.6948,
+      "auc_roc": 0.8294,
+      "precision": 0.6862,
+      "recall": 0.7036,
+      "thr": 0.36
+    },
+    {
+      "model": "LogisticRegression",
+      "plan": "每季重新訓練｜sliding_6m",
+      "f1": 0.6874,
+      "auc_roc": 0.8227,
+      "precision": 0.6668,
+      "recall": 0.7092,
+      "thr": 0.34
+    },
+    {
+      "model": "LogisticRegression",
+      "plan": "每季重新訓練｜sliding_3m",
+      "f1": 0.6848,
+      "auc_roc": 0.8214,
+      "precision": 0.7216,
+      "recall": 0.6515,
+      "thr": 0.42
+    },
+    {
+      "model": "LightGBM",
+      "plan": "static（2017-01 訓練一次）",
+      "f1": 0.6664,
+      "auc_roc": 0.8441,
+      "precision": 0.7635,
+      "recall": 0.5912,
+      "thr": 0.36
+    },
+    {
+      "model": "LightGBM",
+      "plan": "每季重新訓練｜expanding",
+      "f1": 0.6804,
+      "auc_roc": 0.8471,
+      "precision": 0.756,
+      "recall": 0.6186,
+      "thr": 0.36
+    },
+    {
+      "model": "LightGBM",
+      "plan": "每季重新訓練｜sliding_6m",
+      "f1": 0.6941,
+      "auc_roc": 0.8445,
+      "precision": 0.6925,
+      "recall": 0.696,
+      "thr": 0.3733
+    },
+    {
+      "model": "LightGBM",
+      "plan": "每季重新訓練｜sliding_3m",
+      "f1": 0.7027,
+      "auc_roc": 0.8458,
+      "precision": 0.6996,
+      "recall": 0.7077,
+      "thr": 0.3733
+    }
+  ],
+  "runtime_min": 5.9
+}

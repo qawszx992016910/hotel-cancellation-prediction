@@ -1,0 +1,9 @@
+model,plan,thr,accuracy,precision,recall,f1,auc_roc,pr_auc
+LogisticRegression,static（2017-01 訓練一次）,0.36,0.7628,0.6991,0.6806,0.6897,0.828,0.7992
+LogisticRegression,每季重新訓練｜expanding,0.36,0.7606,0.6862,0.7036,0.6948,0.8294,0.8003
+LogisticRegression,每季重新訓練｜sliding_6m,0.34,0.7501,0.6668,0.7092,0.6874,0.8227,0.7938
+LogisticRegression,每季重新訓練｜sliding_3m,0.42,0.7677,0.7216,0.6515,0.6848,0.8214,0.7947
+LightGBM,static（2017-01 訓練一次）,0.36,0.7707,0.7635,0.5912,0.6664,0.8441,0.8039
+LightGBM,每季重新訓練｜expanding,0.36,0.7749,0.756,0.6186,0.6804,0.8471,0.8093
+LightGBM,每季重新訓練｜sliding_6m,0.3733,0.7624,0.6925,0.696,0.6941,0.8445,0.8105
+LightGBM,每季重新訓練｜sliding_3m,0.3733,0.7681,0.6996,0.7077,0.7027,0.8458,0.8125

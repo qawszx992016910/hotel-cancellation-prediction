@@ -1,0 +1,105 @@
+{
+  "log": {
+    "raw_rows": 119390,
+    "removed_invalid_rows": 181,
+    "rows": 119209,
+    "cancel_rate": 0.37076898556317056,
+    "period": "2015-07-01 ~ 2017-08-31"
+  },
+  "evaluation": [
+    {
+      "setting": "隨機切分",
+      "model": "LR",
+      "train": 83446,
+      "test": 17882,
+      "thr": 0.42,
+      "f1": 0.7218427323272438,
+      "precision": 0.7624161073825504,
+      "recall": 0.685369532428356,
+      "auc": 0.8569014980544434
+    },
+    {
+      "setting": "隨機切分",
+      "model": "LGBM",
+      "train": 83446,
+      "test": 17882,
+      "thr": 0.34,
+      "f1": 0.7459974681659096,
+      "precision": 0.7367259891160465,
+      "recall": 0.7555052790346908,
+      "auc": 0.8844298033961049
+    },
+    {
+      "setting": "去重後隨機切分",
+      "model": "LR",
+      "train": 61060,
+      "test": 13085,
+      "thr": 0.34,
+      "f1": 0.5910962429233144,
+      "precision": 0.5508393285371702,
+      "recall": 0.6377012770682954,
+      "auc": 0.790687087088775
+    },
+    {
+      "setting": "去重後隨機切分",
+      "model": "LGBM",
+      "train": 61060,
+      "test": 13085,
+      "thr": 0.3,
+      "f1": 0.6245814213072057,
+      "precision": 0.5644474333109168,
+      "recall": 0.6990560799555803,
+      "auc": 0.828084526956476
+    },
+    {
+      "setting": "時間切分",
+      "model": "LR",
+      "train": 83320,
+      "test": 17898,
+      "thr": 0.32,
+      "f1": 0.6656218655967904,
+      "precision": 0.5973894452571171,
+      "recall": 0.751450813871196,
+      "auc": 0.7951805866442142
+    },
+    {
+      "setting": "時間切分",
+      "model": "LGBM",
+      "train": 83320,
+      "test": 17898,
+      "thr": 0.26,
+      "f1": 0.6745501285347044,
+      "precision": 0.6177751618599175,
+      "recall": 0.7428167020523708,
+      "auc": 0.8098139554057159
+    }
+  ],
+  "practical": [
+    {
+      "model": "LR",
+      "thr": 0.32,
+      "recall_excl_nonrefund": 0.6940766550522648,
+      "top10_precision_daily": 0.861584281849261,
+      "top10_recall": 0.22646850672328378,
+      "base_rate": 0.39473684210526316
+    },
+    {
+      "model": "LGBM",
+      "thr": 0.26,
+      "recall_excl_nonrefund": 0.6834494773519164,
+      "top10_precision_daily": 0.8460647265851237,
+      "top10_recall": 0.2222222222222222,
+      "base_rate": 0.39473684210526316
+    }
+  ],
+  "flagged": [
+    "booking_changes",
+    "reservation_status",
+    "country",
+    "required_car_parking_spaces",
+    "arrival_date_year",
+    "assigned_room_type",
+    "reservation_status_date",
+    "deposit_type"
+  ]
+}

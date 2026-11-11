@@ -6,7 +6,9 @@
 !/code/
 !/data/
 !/results/
+!/demo/
 /code/build_docx.py
 /code/__pycache__/
 /results/preds/
 /results/*stdout*.txt
+/code/fix_citations.py

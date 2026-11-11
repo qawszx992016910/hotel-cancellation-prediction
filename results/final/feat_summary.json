@@ -1,0 +1,264 @@
+{
+  "k_smooth": 20,
+  "leak_check": {
+    "n_checked": 500,
+    "max_abs_rate_diff": 0.0,
+    "count_mismatch": 0,
+    "note": "自身抵達日 ≥ 訂房日，條件「抵達日 < 訂房日」必然排除自身"
+  },
+  "val": [
+    {
+      "model": "LogisticRegression",
+      "features": "base",
+      "thr": 0.36,
+      "f1_pooled": 0.6941,
+      "auc_pooled": 0.8349,
+      "f1_fold_mean": 0.703,
+      "f1_無訂金": 0.5214,
+      "f1_Online TA": 0.5934,
+      "f1_Direct": 0.25
+    },
+    {
+      "model": "LightGBM",
+      "features": "base",
+      "thr": 0.36,
+      "f1_pooled": 0.7123,
+      "auc_pooled": 0.852,
+      "f1_fold_mean": 0.7133,
+      "f1_無訂金": 0.5251,
+      "f1_Online TA": 0.6137,
+      "f1_Direct": 0.2206
+    },
+    {
+      "model": "LogisticRegression",
+      "features": "+calendar",
+      "thr": 0.38,
+      "f1_pooled": 0.6909,
+      "auc_pooled": 0.8317,
+      "f1_fold_mean": 0.7015,
+      "f1_無訂金": 0.5192,
+      "f1_Online TA": 0.5914,
+      "f1_Direct": 0.2485
+    },
+    {
+      "model": "LightGBM",
+      "features": "+calendar",
+      "thr": 0.36,
+      "f1_pooled": 0.7146,
+      "auc_pooled": 0.8559,
+      "f1_fold_mean": 0.7156,
+      "f1_無訂金": 0.5291,
+      "f1_Online TA": 0.6181,
+      "f1_Direct": 0.2154
+    },
+    {
+      "model": "LogisticRegression",
+      "features": "+agent",
+      "thr": 0.32,
+      "f1_pooled": 0.7065,
+      "auc_pooled": 0.8416,
+      "f1_fold_mean": 0.7111,
+      "f1_無訂金": 0.5277,
+      "f1_Online TA": 0.6082,
+      "f1_Direct": 0.2628
+    },
+    {
+      "model": "LightGBM",
+      "features": "+agent",
+      "thr": 0.3733,
+      "f1_pooled": 0.7167,
+      "auc_pooled": 0.858,
+      "f1_fold_mean": 0.7121,
+      "f1_無訂金": 0.5195,
+      "f1_Online TA": 0.6085,
+      "f1_Direct": 0.2153
+    },
+    {
+      "model": "LogisticRegression",
+      "features": "+both",
+      "thr": 0.32,
+      "f1_pooled": 0.7035,
+      "auc_pooled": 0.8412,
+      "f1_fold_mean": 0.7091,
+      "f1_無訂金": 0.5341,
+      "f1_Online TA": 0.6087,
+      "f1_Direct": 0.2704
+    },
+    {
+      "model": "LightGBM",
+      "features": "+both",
+      "thr": 0.3533,
+      "f1_pooled": 0.7177,
+      "auc_pooled": 0.858,
+      "f1_fold_mean": 0.7123,
+      "f1_無訂金": 0.5237,
+      "f1_Online TA": 0.6095,
+      "f1_Direct": 0.224
+    }
+  ],
+  "val_diff_vs_base": {
+    "LogisticRegression:+calendar-base": {
+      "point": -0.0032000000000000917,
+      "ci95": [
+        -0.005803219591578368,
+        -0.0004686225257233516
+      ],
+      "passes_rule": false
+    },
+    "LogisticRegression:+agent-base": {
+      "point": 0.012399999999999967,
+      "ci95": [
+        0.006926048796827636,
+        0.016921303788486556
+      ],
+      "passes_rule": false
+    },
+    "LogisticRegression:+both-base": {
+      "point": 0.009399999999999964,
+      "ci95": [
+        0.003870382114484275,
+        0.013887409495316071
+      ],
+      "passes_rule": false
+    },
+    "LightGBM:+calendar-base": {
+      "point": 0.0022999999999999687,
+      "ci95": [
+        0.0003775072743045958,
+        0.004091062693592883
+      ],
+      "passes_rule": false
+    },
+    "LightGBM:+agent-base": {
+      "point": 0.0043999999999999595,
+      "ci95": [
+        0.0012590395746784454,
+        0.007466483344498733
+      ],
+      "passes_rule": false
+    },
+    "LightGBM:+both-base": {
+      "point": 0.00539999999999996,
+      "ci95": [
+        0.002468257300392736,
+        0.008460775851892295
+      ],
+      "passes_rule": false
+    }
+  },
+  "test_2017": [
+    {
+      "model": "LogisticRegression",
+      "features": "base",
+      "thr": 0.36,
+      "accuracy": 0.7606,
+      "precision": 0.6862,
+      "recall": 0.7036,
+      "f1": 0.6948,
+      "auc_roc": 0.8294,
+      "pr_auc": 0.8003,
+      "f1_無訂金": 0.5883,
+      "f1_Online TA": 0.6444,
+      "f1_Direct": 0.2035
+    },
+    {
+      "model": "LightGBM",
+      "features": "base",
+      "thr": 0.36,
+      "accuracy": 0.7749,
+      "precision": 0.756,
+      "recall": 0.6186,
+      "f1": 0.6804,
+      "auc_roc": 0.8471,
+      "pr_auc": 0.8093,
+      "f1_無訂金": 0.5511,
+      "f1_Online TA": 0.6156,
+      "f1_Direct": 0.0876
+    },
+    {
+      "model": "LogisticRegression",
+      "features": "+calendar",
+      "thr": 0.38,
+      "accuracy": 0.7669,
+      "precision": 0.7097,
+      "recall": 0.6738,
+      "f1": 0.6913,
+      "auc_roc": 0.8285,
+      "pr_auc": 0.7998,
+      "f1_無訂金": 0.5778,
+      "f1_Online TA": 0.636,
+      "f1_Direct": 0.196
+    },
+    {
+      "model": "LightGBM",
+      "features": "+calendar",
+      "thr": 0.36,
+      "accuracy": 0.7717,
+      "precision": 0.7517,
+      "recall": 0.6131,
+      "f1": 0.6754,
+      "auc_roc": 0.8452,
+      "pr_auc": 0.8075,
+      "f1_無訂金": 0.5439,
+      "f1_Online TA": 0.61,
+      "f1_Direct": 0.0804
+    },
+    {
+      "model": "LogisticRegression",
+      "features": "+agent",
+      "thr": 0.32,
+      "accuracy": 0.7406,
+      "precision": 0.6406,
+      "recall": 0.7521,
+      "f1": 0.6919,
+      "auc_roc": 0.8293,
+      "pr_auc": 0.8002,
+      "f1_無訂金": 0.5941,
+      "f1_Online TA": 0.6515,
+      "f1_Direct": 0.2276
+    },
+    {
+      "model": "LightGBM",
+      "features": "+agent",
+      "thr": 0.3733,
+      "accuracy": 0.7737,
+      "precision": 0.7204,
+      "recall": 0.6797,
+      "f1": 0.6994,
+      "auc_roc": 0.8485,
+      "pr_auc": 0.8143,
+      "f1_無訂金": 0.5884,
+      "f1_Online TA": 0.6466,
+      "f1_Direct": 0.1226
+    },
+    {
+      "model": "LogisticRegression",
+      "features": "+both",
+      "thr": 0.32,
+      "accuracy": 0.7447,
+      "precision": 0.6489,
+      "recall": 0.7425,
+      "f1": 0.6926,
+      "auc_roc": 0.8281,
+      "pr_auc": 0.7993,
+      "f1_無訂金": 0.5931,
+      "f1_Online TA": 0.651,
+      "f1_Direct": 0.2204
+    },
+    {
+      "model": "LightGBM",
+      "features": "+both",
+      "thr": 0.3533,
+      "accuracy": 0.766,
+      "precision": 0.6997,
+      "recall": 0.6981,
+      "f1": 0.6979,
+      "auc_roc": 0.8472,
+      "pr_auc": 0.8131,
+      "f1_無訂金": 0.5903,
+      "f1_Online TA": 0.6493,
+      "f1_Direct": 0.1391
+    }
+  ],
+  "runtime_min": 8.9
+}

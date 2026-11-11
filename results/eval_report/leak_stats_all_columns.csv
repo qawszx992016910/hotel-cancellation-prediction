@@ -1,0 +1,35 @@
+﻿column,single_auc,extreme_levels,stat_flag,stat_reason,timing_level,timing_note,in_base
+hotel,0.5734,0,False,,,,True
+lead_time,0.686,0,False,,,,True
+arrival_date_year,0.5118,0,False,,不可外推,年份只有少數值，無法外推到未來,False
+arrival_date_month,0.5509,0,False,,,,False
+arrival_date_week_number,0.5494,0,False,,,,True
+arrival_date_day_of_month,0.5146,0,False,,,,True
+stays_in_weekend_nights,0.5178,0,False,,,,True
+stays_in_week_nights,0.5616,0,False,,,,True
+adults,0.5392,0,False,,,,True
+children,0.5054,0,False,,,,True
+babies,0.5023,0,False,,,,True
+meal,0.5087,0,False,,,,True
+country,0.701,0,False,,入住時才確定,訂房時多預設為葡萄牙，入住出示證件才更正,False
+market_segment,0.6328,0,False,,,,True
+distribution_channel,0.5696,0,False,,,,True
+is_repeated_guest,0.5144,0,False,,,,True
+previous_cancellations,0.5649,0,False,,,,True
+previous_bookings_not_canceled,0.5,0,False,,,,True
+reserved_room_type,0.5366,0,False,,,,True
+assigned_room_type,0.6047,0,False,,入住時才確定,實際分配房型，可能因超賣或客人要求改變,False
+booking_changes,0.5704,0,False,,可能含事後資訊,統計到入住或取消為止；預設保留，請看加回／刪除差,True
+deposit_type,0.6631,1,True,"Non Refund 取消率 99.4%（n=10,195）",,,True
+agent,0.7139,0,False,,,,True
+company,0.5273,0,False,,,,True
+days_in_waiting_list,0.5,0,False,,,,True
+customer_type,0.5611,0,False,,,,True
+adr,0.5758,0,False,,,,True
+required_car_parking_spaces,0.5506,1,True,"1 取消率 0.0%（n=5,164）",入住時才確定,停車需求多在抵達時登記,False
+total_of_special_requests,0.6353,0,False,,,,True
+reservation_status,1.0,3,True,"Canceled 取消率 100.0%（n=30,086）；Check-Out 取消率 0.0%（n=52,507）；No-Show 取消率 100.0%（n=853）；單欄 AUC 1.000",事後資訊,訂單最後狀態，Canceled／No-Show 直接對應答案,False
+reservation_status_date,0.7615,1,True,2015-01-01 取消率 100.0%（n=541）,事後資訊,最後狀態的日期,False
+total_guests,0.546,0,False,,,,True
+total_nights,0.5759,0,False,,,,True
+arrival_month,0.5509,0,False,,,,True

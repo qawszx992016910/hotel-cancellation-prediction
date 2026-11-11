@@ -1,0 +1,5 @@
+period,model,thr,f1,precision,recall,excl_nonrefund_recall,excl_nonrefund_precision,excl_nonrefund_f1,excl_nonrefund_n,top10_precision_daily_mean,top10_precision_pooled,top10_recall,base_cancel_rate,top10_n,excl_nonrefund_top10_precision_daily_mean,excl_nonrefund_top10_precision_pooled
+驗證期（5 切點合併）,LogisticRegression,0.36,0.6941,0.7114,0.6776,0.4997,0.5424,0.5202,58376.0,0.7849,0.8351,0.2444,0.3519,6881.0,0.6593,0.6758
+2017 測試期,LogisticRegression,0.36,0.6948,0.6862,0.7036,0.5986,0.579,0.5886,36493.0,0.833,0.8567,0.2273,0.3874,4174.0,0.7124,0.7202
+驗證期（5 切點合併）,LightGBM,0.36,0.7123,0.8059,0.6383,0.4387,0.6531,0.5248,58376.0,0.79,0.8455,0.2474,0.3519,6881.0,0.6744,0.6974
+2017 測試期,LightGBM,0.36,0.6804,0.756,0.6186,0.4834,0.6418,0.5515,36493.0,0.8427,0.8624,0.2288,0.3874,4174.0,0.7171,0.7213

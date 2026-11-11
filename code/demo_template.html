@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>訂房取消風險展示</title>
+<style>
+:root{--bg:#f7f7f5;--card:#fff;--ink:#1f2328;--muted:#5d6670;--line:#dcdfe3;--accent:#2f6f9f;--accent-soft:#e6f0f7;
+--hi:#b4462f;--hi-soft:#fbeae6;--lo:#2e7d4f;--lo-soft:#e5f3ea;--chip:#eef0f2}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#15181c;--card:#1d2126;--ink:#e6e8eb;--muted:#9aa3ad;
+--line:#323840;--accent:#7fb3db;--accent-soft:#22313d;--hi:#f08a72;--hi-soft:#3a2420;--lo:#7cc79a;--lo-soft:#1e3326;--chip:#2a3037}}
+:root[data-theme="dark"]{--bg:#15181c;--card:#1d2126;--ink:#e6e8eb;--muted:#9aa3ad;--line:#323840;--accent:#7fb3db;
+--accent-soft:#22313d;--hi:#f08a72;--hi-soft:#3a2420;--lo:#7cc79a;--lo-soft:#1e3326;--chip:#2a3037}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 "Microsoft JhengHei","Noto Sans TC","PingFang TC",sans-serif}
+main{max-width:1120px;margin:0 auto;padding:24px 16px 64px}
+h1{font-size:24px;margin:0 0 4px}h2{font-size:18px;margin:28px 0 10px}h3{font-size:15px;margin:18px 0 8px}
+.sub{color:var(--muted);margin:0 0 18px}
+nav{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--line);margin-bottom:18px}
+nav button{background:none;border:0;border-bottom:2px solid transparent;color:var(--muted);font:inherit;padding:8px 12px;cursor:pointer}
+nav button.on{color:var(--ink);border-color:var(--accent);font-weight:600}
+.panel{display:none}.panel.on{display:block}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px}
+.kpi b{display:block;font-size:26px;font-variant-numeric:tabular-nums}.kpi span{color:var(--muted);font-size:13px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;margin:12px 0}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:13.5px;font-variant-numeric:tabular-nums}
+th,td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:left;white-space:nowrap}
+th{color:var(--muted);font-weight:600}
+td.r,th.r{text-align:right}
+tr.top td{background:var(--accent-soft)}
+img{max-width:100%;border-radius:8px;background:#fff}
+.figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
+.note{color:var(--muted);font-size:13px}
+.chip{display:inline-block;background:var(--chip);border-radius:999px;padding:1px 8px;font-size:12px}
+.yes{color:var(--hi);font-weight:600}.no{color:var(--lo)}
+.bar{height:8px;border-radius:4px;background:var(--chip);position:relative;min-width:60px}
+.bar i{position:absolute;left:0;top:0;bottom:0;border-radius:4px;background:var(--accent)}
+form{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px 14px}
+label{display:flex;flex-direction:column;font-size:13px;color:var(--muted);gap:3px}
+input,select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:6px 8px;min-width:0}
+.controls{display:flex;gap:12px;flex-wrap:wrap;align-items:end;margin-bottom:8px}
+.result{display:grid;grid-template-columns:minmax(180px,240px) 1fr;gap:16px;align-items:start}
+.gauge{border-radius:10px;padding:16px;text-align:center}
+.gauge b{font-size:40px;display:block;font-variant-numeric:tabular-nums}
+.gauge.hi{background:var(--hi-soft);color:var(--hi)}.gauge.lo{background:var(--lo-soft);color:var(--lo)}
+ul.ex{margin:6px 0;padding-left:20px}
+@media (max-width:640px){.result{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+<h1>訂房取消風險展示</h1>
+<p class="sub">人工智慧期末專題｜Hotel Booking Demand 公開資料（葡萄牙兩家飯店，2015-07 至 2017-08）。本頁所有數字由專題程式預先計算，單筆預測在瀏覽器內執行，不上傳任何資料。</p>
+<nav id="tabs">
+  <button data-p="sum" class="on">成果摘要</button>
+  <button data-p="daily">每日聯繫名單</button>
+  <button data-p="one">單筆預測</button>
+</nav>
+
+<section id="sum" class="panel on">
+  <div class="kpis" id="kpis"></div>
+  <h2>正式方案與選擇依據</h2>
+  <div class="card" id="plan"></div>
+  <h2>評估方式造成的落差</h2>
+  <div class="card tw" id="evtab"></div>
+  <h2>重新訓練策略（2017 測試期）</h2>
+  <div class="card tw" id="rttab"></div>
+  <h2>洩漏檢查結果</h2>
+  <div class="card tw" id="leaktab"></div>
+  <h2>圖</h2>
+  <div class="figs" id="figs"></div>
+</section>
+
+<section id="daily" class="panel">
+  <p class="note">示範情境：飯店每天針對當日抵達的訂單，聯繫風險最高的前 10%。預測來自 2017 年每季重新訓練的 LightGBM（訓練只用該季之前的資料）。不退款與團體訂單已收款或有合約，另列於下方，不與一般訂單混排。「實際結果」為事後資料，只用於檢視名單準確度。</p>
+  <div class="controls">
+    <label>抵達日<input type="date" id="d" min="2017-01-01" max="2017-08-31" value="2017-07-15"></label>
+    <label>飯店<select id="dh"><option value="">全部</option><option>City Hotel</option><option>Resort Hotel</option></select></label>
+  </div>
+  <div class="card" id="dstat"></div>
+  <h3>一般訂單（依風險排序，底色＝前 10%）</h3>
+  <div class="card tw" id="dgen"></div>
+  <h3>不退款訂單</h3>
+  <div class="card tw" id="dnr"></div>
+  <h3>團體訂單（市場區隔 Groups）</h3>
+  <div class="card tw" id="dgrp"></div>
+</section>
+
+<section id="one" class="panel">
+  <p class="note">示範模型：LightGBM（15 葉、100 棵），以 2015-07-01 至 2017-06-30 的訂單訓練。只適用於這兩家飯店的資料結構與期間，不應套用到其他飯店。說明文字是同類訂單的歷史取消率（描述統計），不代表因果。</p>
+  <div class="card"><form id="f"></form></div>
+  <div class="card result" id="out"></div>
+</section>
+</main>
+<script>
+/*__MODELJS__*/
+const D = /*__DATA__*/null;
+const $ = s => document.querySelector(s);
+const pct = (v, d = 1) => (v * 100).toFixed(d) + "%";
+const f3 = v => (v === "" || v === null || v === undefined || Number.isNaN(+v)) ? "—" : (+v).toFixed(3);
+function table(cols, rows, rowClass) {
+  return "<table><thead><tr>" + cols.map(c => `<th class="${c.r ? "r" : ""}">${c.h}</th>`).join("") +
+    "</tr></thead><tbody>" + rows.map((r, i) => `<tr class="${rowClass ? rowClass(r, i) : ""}">` +
+      cols.map(c => `<td class="${c.r ? "r" : ""}">${c.f ? c.f(r, i) : r[c.k]}</td>`).join("") + "</tr>").join("") +
+    "</tbody></table>";
+}
+document.querySelectorAll("#tabs button").forEach(b => b.onclick = () => {
+  document.querySelectorAll("#tabs button,.panel").forEach(e => e.classList.remove("on"));
+  b.classList.add("on"); $("#" + b.dataset.p).classList.add("on");
+  try { localStorage.setItem("tab", b.dataset.p); } catch (e) {}
+});
+try { const t = localStorage.getItem("tab"); if (t) document.querySelector(`#tabs button[data-p="${t}"]`)?.click(); } catch (e) {}
+
+// ---------- 成果摘要 ----------
+(function () {
+  const S = D.summary, m = S.metrics, T = r => m.find(x => x.period === "2017 測試期" && x.model === r);
+  const L = T("LightGBM"), R = T("LogisticRegression");
+  const ev = S.eval, g = (s, mo) => ev.find(x => x.setting === s && x.model === mo).f1;
+  $("#kpis").innerHTML = [
+    [f3(L.f1), "2017 測試期 F1（LightGBM，每季重新訓練）"],
+    [pct(L.top10_precision_daily_mean), `每日前 10% 訂單實際取消比例（基準 ${pct(L.base_cancel_rate)}）`],
+    [f3(L.excl_nonrefund_recall), "排除不退款訂單後的 Recall"],
+    [f3(g("隨機切分", "LGBM") - g("時間切分", "LGBM")), "隨機切分比時間切分高估的 F1"],
+  ].map(([b, s]) => `<div class="kpi"><b>${b}</b><span>${s}</span></div>`).join("");
+  const sel = S.selection, d = sel.val_f1_diff_lgbm_minus_lr;
+  $("#plan").innerHTML = `<ul class="ex">
+   <li><b>模型</b>：LightGBM（${sel.best_config.LightGBM.param} 葉、${sel.best_config.LightGBM.trees} 棵，門檻 ${sel.best_config.LightGBM.thr_mean.toFixed(2)}）。事先定義的規則：rolling-origin 驗證期 F1 差（LightGBM − Logistic Regression）的 95% 信賴區間下界須大於 0.01；結果為 ${f3(d.point)}，CI [${f3(d.ci95[0])}, ${f3(d.ci95[1])}]，通過。</li>
+   <li><b>重新訓練</b>：每季、使用全部歷史資料（expanding）。3／6 個月滑動視窗在驗證期未通過同一規則，列為探索性結果。</li>
+   <li><b>特徵</b>：維持基本特徵。agent 歷史取消率在驗證期有小而一致的改善，但未達 0.01 門檻；週末與國定假日特徵沒有幫助。</li>
+   <li><b>如實說明</b>：2017 測試期 Logistic Regression 的 F1（${f3(R.f1)}）高於 LightGBM（${f3(L.f1)}）；選擇只依驗證期，不依測試集改選。</li></ul>`;
+  $("#evtab").innerHTML = table([{h: "評估方式", k: "setting"}, {h: "模型", k: "model"}, {h: "F1", f: r => f3(r.f1), r: 1},
+    {h: "Precision", f: r => f3(r.precision), r: 1}, {h: "Recall", f: r => f3(r.recall), r: 1}, {h: "AUC", f: r => f3(r.auc), r: 1},
+    {h: "門檻", f: r => (+r.thr).toFixed(2), r: 1}], ev) + `<p class="note">同一份資料、同樣的模型，只改變切分方式。隨機切分讓同一期間的訂單同時出現在訓練與測試，效能偏高；去重後再隨機切分則顯示重複列的影響。</p>`;
+  $("#rttab").innerHTML = table([{h: "模型", k: "model"}, {h: "方案", k: "plan"}, {h: "F1", f: r => f3(r.f1), r: 1},
+    {h: "AUC", f: r => f3(r.auc_roc), r: 1}, {h: "Precision", f: r => f3(r.precision), r: 1}, {h: "Recall", f: r => f3(r.recall), r: 1}],
+    S.retrain_test);
+  $("#leaktab").innerHTML = table([{h: "欄位", k: "column"}, {h: "判定", k: "verdict"},
+    {h: "使用此欄的 F1 增量（隨機切分）", f: r => f3(r.f1_gain_if_used), r: 1}, {h: "統計規則理由", f: r => r.stat_reason || "—"}], S.flagged) +
+    `<p class="note">第一層依欄位確定時點清單排除；第二層統計規則只提示「需人工確認」。country 不會被統計規則標出，但加回後 F1 上升，顯示只靠統計規則不足。</p>`;
+  $("#figs").innerHTML = [["split", "三種評估方式的 F1"], ["retrain", "2017 年各月 F1：只訓練一次 vs 每季重新訓練"],
+    ["thr", "門檻—Recall／Precision 曲線"]].map(([k, c]) => `<figure class="card" style="margin:0"><img src="${D.figs[k]}" alt="${c}"><figcaption class="note">${c}</figcaption></figure>`).join("");
+})();
+
+// ---------- 每日聯繫名單 ----------
+const Lz = D.lists, N = Lz.p.length;
+function renderDaily() {
+  const day = $("#d").value, h = $("#dh").value, idx = [];
+  for (let i = 0; i < N; i++) if (Lz.arrival_date[i] === day && (!h || Lz.hotel[i] === h)) idx.push(i);
+  const isNR = i => Lz.deposit_type[i] === "Non Refund", isG = i => Lz.market_segment[i] === "Groups";
+  const gen = idx.filter(i => !isNR(i) && !isG(i)).sort((a, b) => Lz.p[b] - Lz.p[a]);
+  const nr = idx.filter(isNR).sort((a, b) => Lz.p[b] - Lz.p[a]);
+  const grp = idx.filter(i => !isNR(i) && isG(i)).sort((a, b) => Lz.p[b] - Lz.p[a]);
+  const k = Math.ceil(gen.length * 0.10), topHit = gen.slice(0, k).filter(i => Lz.is_canceled[i] === 1).length;
+  const genRate = gen.length ? gen.filter(i => Lz.is_canceled[i] === 1).length / gen.length : 0;
+  $("#dstat").innerHTML = gen.length ? `當日一般訂單 ${gen.length} 筆，聯繫前 10%（${k} 筆）中有 <b>${topHit}</b> 筆實際取消（${pct(topHit / k, 0)}）；當日一般訂單取消率 ${pct(genRate, 0)}。另有不退款 ${nr.length} 筆、團體 ${grp.length} 筆。`
+    : "這一天沒有符合條件的訂單。";
+  const cols = [{h: "#", f: (i, n) => n + 1, r: 1}, {h: "風險", f: i => `<div style="display:flex;gap:6px;align-items:center"><span style="width:44px;text-align:right">${pct(Lz.p[i], 0)}</span><div class="bar" style="flex:1"><i style="width:${Lz.p[i] * 100}%"></i></div></div>`},
+    {h: "飯店", f: i => Lz.hotel[i]}, {h: "前置天數", f: i => Lz.lead_time[i], r: 1}, {h: "市場區隔", f: i => Lz.market_segment[i]},
+    {h: "訂金", f: i => Lz.deposit_type[i]}, {h: "顧客類型", f: i => Lz.customer_type[i]}, {h: "晚數", f: i => Lz.total_nights[i], r: 1},
+    {h: "ADR", f: i => Lz.adr[i], r: 1}, {h: "實際結果（事後）", f: i => Lz.is_canceled[i] ? '<span class="yes">取消</span>' : '<span class="no">入住</span>'}];
+  const lim = a => a.slice(0, 60);
+  $("#dgen").innerHTML = gen.length ? table(cols, lim(gen), (i, n) => n < k ? "top" : "") + (gen.length > 60 ? `<p class="note">僅顯示前 60 筆（共 ${gen.length} 筆）</p>` : "") : "—";
+  $("#dnr").innerHTML = nr.length ? table(cols, lim(nr)) : "—";
+  $("#dgrp").innerHTML = grp.length ? table(cols, lim(grp)) : "—";
+  try { localStorage.setItem("day", day); } catch (e) {}
+}
+try { const s = localStorage.getItem("day"); if (s) $("#d").value = s; } catch (e) {}
+$("#d").onchange = renderDaily; $("#dh").onchange = renderDaily; renderDaily();
+
+// ---------- 單筆預測 ----------
+const C = D.choices;
+const FIELDS = [
+  ["hotel", "飯店", "sel", "City Hotel"], ["arrival", "抵達日", "date", "2017-08-15"], ["lead_time", "前置天數", "num", 60],
+  ["stays_in_weekend_nights", "週末晚數", "num", 1], ["stays_in_week_nights", "平日晚數", "num", 2], ["adults", "成人", "num", 2],
+  ["children", "兒童", "num", 0], ["babies", "嬰兒", "num", 0], ["meal", "餐食", "sel", "BB"],
+  ["market_segment", "市場區隔", "sel", "Online TA"], ["distribution_channel", "通路", "sel", "TA/TO"],
+  ["reserved_room_type", "預訂房型", "sel", "A"], ["deposit_type", "訂金類型", "sel", "No Deposit"],
+  ["customer_type", "顧客類型", "sel", "Transient"], ["agent", "旅行社代碼（agent）", "sel", "9"], ["company", "公司代碼", "sel", "None"],
+  ["is_repeated_guest", "回頭客（0/1）", "num", 0], ["previous_cancellations", "過去取消次數", "num", 0],
+  ["previous_bookings_not_canceled", "過去未取消次數", "num", 0], ["booking_changes", "訂單修改次數", "num", 0],
+  ["days_in_waiting_list", "候補天數", "num", 0], ["adr", "平均房價 ADR（€）", "num", 110], ["total_of_special_requests", "特殊需求數", "num", 0],
+];
+$("#f").innerHTML = FIELDS.map(([k, h, t, v]) => `<label>${h}` + (t === "sel"
+  ? `<select name="${k}">${C[k].map(o => `<option${o === String(v) ? " selected" : ""}>${o}</option>`).join("")}</select>`
+  : `<input name="${k}" type="${t === "date" ? "date" : "number"}" value="${v}" ${t === "num" ? 'min="0" step="any"' : ""}>`) + "</label>").join("");
+const LEAD = [[7, "0–7 天"], [30, "8–30 天"], [90, "31–90 天"], [180, "91–180 天"], [1e9, "180 天以上"]];
+function runOne() {
+  const fd = Object.fromEntries(new FormData($("#f")).entries());
+  const dt = new Date(fd.arrival + "T00:00:00");
+  if (Number.isNaN(dt.getTime())) return;
+  const md = fd.arrival.slice(5), num = k => +fd[k] || 0;
+  const row = Object.assign({}, fd, {
+    arrival_month: dt.getMonth() + 1, arrival_date_day_of_month: dt.getDate(),
+    arrival_date_week_number: D.week[md] ?? D.week["02-28"],
+    total_nights: num("stays_in_weekend_nights") + num("stays_in_week_nights"),
+    total_guests: num("adults") + num("children") + num("babies")});
+  const p = predict(D.model, row), thr = D.model.thr, S = D.stats, base = S.base;
+  const lead = LEAD.find(([u]) => num("lead_time") <= u)[1];
+  const facts = [
+    ["訂金類型", fd.deposit_type, S.deposit_type[fd.deposit_type]], ["市場區隔", fd.market_segment, S.market_segment[fd.market_segment]],
+    ["前置天數", lead, S.lead[lead]], ["過去曾取消", num("previous_cancellations") > 0 ? "有" : "無", S.prev_cancel[num("previous_cancellations") > 0 ? "有" : "無"]],
+    ["特殊需求", num("total_of_special_requests") > 0 ? "有" : "無", S.special[num("total_of_special_requests") > 0 ? "有" : "無"]],
+  ].filter(f => f[2]);
+  facts.sort((a, b) => Math.abs(b[2].mean - base) - Math.abs(a[2].mean - base));
+  const lvl = p >= thr ? "高於門檻，建議列入聯繫名單" : "低於門檻";
+  const comp = p >= base ? `高於訓練資料平均取消率（${pct(base)}）` : `低於訓練資料平均取消率（${pct(base)}）`;
+  const head = facts.slice(0, 2).map(f => `${f[1] === "有" || f[1] === "無" ? f[0] + f[1] : f[1]}`).join("、");
+  const special = fd.deposit_type === "Non Refund" ? "<p class='note'>不退款訂單已收款，即使取消也不影響已收房款；請與一般訂單分開看待。</p>"
+    : fd.market_segment === "Groups" ? "<p class='note'>團體訂單通常有合約與保證條款，請與一般訂單分開看待。</p>" : "";
+  $("#out").innerHTML = `<div class="gauge ${p >= thr ? "hi" : "lo"}"><b>${pct(p)}</b>預測取消機率<br><span class="note">門檻 ${thr.toFixed(2)}：${lvl}</span></div>
+   <div><p><b>說明：</b>${head}，取消風險${comp}。</p>
+   <table><thead><tr><th>同類訂單</th><th class="r">歷史取消率</th><th class="r">訓練資料筆數</th></tr></thead><tbody>
+   ${facts.map(f => `<tr><td>${f[0]}：${f[1]}</td><td class="r">${pct(f[2].mean)}</td><td class="r">${f[2].size.toLocaleString()}</td></tr>`).join("")}
+   </tbody></table><p class="note">依與平均差距排序。這些是單一欄位的歷史統計，模型的預測同時考慮所有欄位，兩者不一定一致。</p>${special}</div>`;
+}
+$("#f").addEventListener("input", runOne); runOne();
+</script>
+</body>
+</html>

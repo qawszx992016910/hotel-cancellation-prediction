@@ -1,0 +1,21 @@
+LogisticRegression s42 done 15s
+LightGBM s42 done 42s
+LightGBM s43 done 75s
+LightGBM s44 done 105s
+period                                           驗證期（5 切點合併）           2017 測試期 驗證期（5 切點合併）    2017 測試期
+model                                     LogisticRegression LogisticRegression    LightGBM    LightGBM
+thr                                                   0.3600             0.3600      0.3600      0.3600
+f1                                                    0.6941             0.6948      0.7123      0.6804
+precision                                             0.7114             0.6862      0.8059      0.7560
+recall                                                0.6776             0.7036      0.6383      0.6186
+excl_nonrefund_recall                                 0.4997             0.5986      0.4387      0.4834
+excl_nonrefund_precision                              0.5424             0.5790      0.6531      0.6418
+excl_nonrefund_f1                                     0.5202             0.5886      0.5248      0.5515
+excl_nonrefund_n                                  58376.0000         36493.0000  58376.0000  36493.0000
+top10_precision_daily_mean                            0.7849             0.8330      0.7900      0.8427
+top10_precision_pooled                                0.8351             0.8567      0.8455      0.8624
+top10_recall                                          0.2444             0.2273      0.2474      0.2288
+base_cancel_rate                                      0.3519             0.3874      0.3519      0.3874
+top10_n                                            6881.0000          4174.0000   6881.0000   4174.0000
+excl_nonrefund_top10_precision_daily_mean             0.6593             0.7124      0.6744      0.7171
+excl_nonrefund_top10_precision_pooled                 0.6758             0.7202      0.6974      0.7213
