@@ -32,6 +32,7 @@ python code/final_07_explain.py          # 各類別效能、混淆矩陣、Tree
 python code/final_08_ablation.py         # 消融實驗：門檻 0.5、期中設定、類別權重；表 4-1 訓練時間
 python code/final_09_e4_accuracy.py      # 期中時間切分（驗證集選定門檻）的 Accuracy
 python code/demo_functional_test.py      # 網頁功能測試（無頭 Chrome，需先 build_demo.py）
+python code/demo_screenshots.py          # 報告圖 5-2、5-3 網頁截圖
 python code/sus_score.py                 # 使用者測試 SUS 計分（讀 data/sus_responses.csv）
 python code/booking_eval.py --data data/hotel_bookings.csv --out results/eval_report   # 評估工具
 python code/build_demo.py                # 產生 demo/index.html（單檔網頁展示）

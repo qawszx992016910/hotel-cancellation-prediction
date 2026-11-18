@@ -37,7 +37,12 @@ img{max-width:100%;border-radius:8px;background:#fff}
 .yes{color:var(--hi);font-weight:600}.no{color:var(--lo)}
 .bar{height:8px;border-radius:4px;background:var(--chip);position:relative;min-width:60px}
 .bar i{position:absolute;left:0;top:0;bottom:0;border-radius:4px;background:var(--accent)}
-form{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px 14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px 14px}
+.howto{background:var(--accent-soft);border-radius:8px;padding:10px 14px;margin:0 0 12px}
+.howto b{color:var(--accent)}
+details{margin:4px 0 12px}summary{cursor:pointer;color:var(--accent);font-size:13px}
+details.adv{margin-top:14px;border-top:1px dashed var(--line);padding-top:10px}details.adv .grid{margin-top:10px}
+.linkbtn{background:var(--card);border:1px solid var(--accent);color:var(--accent);border-radius:6px;padding:4px 10px;font:inherit;font-size:14px;cursor:pointer;margin:0 4px}
 label{display:flex;flex-direction:column;font-size:13px;color:var(--muted);gap:3px}
 input,select{font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:6px 8px;min-width:0}
 .controls{display:flex;gap:12px;flex-wrap:wrap;align-items:end;margin-bottom:8px}
@@ -60,6 +65,7 @@ ul.ex{margin:6px 0;padding-left:20px}
 </nav>
 
 <section id="sum" class="panel on">
+  <p class="howto"><b>從這裡開始：</b>想知道某一天該先聯繫哪些訂單 → <button class="linkbtn" data-go="daily">每日聯繫名單</button>　想查一筆訂單的取消機率 → <button class="linkbtn" data-go="one">單筆預測</button>　下方為模型成果摘要。</p>
   <div class="kpis" id="kpis"></div>
   <h2>正式方案與選擇依據</h2>
   <div class="card" id="plan"></div>
@@ -74,10 +80,11 @@ ul.ex{margin:6px 0;padding-left:20px}
 </section>
 
 <section id="daily" class="panel">
-  <p class="note">示範情境：飯店在抵達前若干天，針對當時仍有效的訂單（已訂房且尚未取消）聯繫風險最高的前 10%。選「抵達當天（含已取消）」時名單會包含早已取消的訂單，命中率偏高，只供對照。預測來自 2017 年每季重新訓練的 LightGBM（訓練只用該季之前的資料）。不退款與團體訂單已收款或有合約，另列於下方，不與一般訂單混排。「實際結果」為事後資料，只用於檢視名單準確度。</p>
+  <p class="howto"><b>怎麼用：</b>選「抵達日」「何時聯繫」「飯店」，下方名單會由取消風險最高的訂單排起；有底色的前 10% 建議優先聯繫。</p>
+  <details><summary>詳細說明</summary><p class="note">示範情境：飯店在抵達前若干天，針對當時仍有效的訂單（已訂房且尚未取消）聯繫風險最高的前 10%。選「抵達當天（含已取消）」時名單會包含早已取消的訂單，命中率偏高，只供對照。預測來自 2017 年每季重新訓練的 LightGBM（訓練只用該季之前的資料）。不退款與團體訂單已收款或有合約，另列於下方，不與一般訂單混排。「實際結果」為事後資料，只用於檢視名單準確度。</p></details>
   <div class="controls">
     <label>抵達日<input type="date" id="d" min="2017-01-01" max="2017-08-31" value="2017-07-15"></label>
-    <label>聯繫時點<select id="dc"><option value="30" selected>抵達前 30 天</option><option value="14">抵達前 14 天</option><option value="7">抵達前 7 天</option><option value="0">抵達當天（含已取消）</option></select></label>
+    <label>何時聯繫<select id="dc"><option value="30" selected>抵達前 30 天</option><option value="14">抵達前 14 天</option><option value="7">抵達前 7 天</option><option value="0">抵達當天（含已取消）</option></select></label>
     <label>飯店<select id="dh"><option value="">全部</option><option>City Hotel</option><option>Resort Hotel</option></select></label>
   </div>
   <div class="card" id="dstat"></div>
@@ -90,7 +97,8 @@ ul.ex{margin:6px 0;padding-left:20px}
 </section>
 
 <section id="one" class="panel">
-  <p class="note">示範模型：LightGBM（15 葉、100 棵），以 2015-07-01 至 2017-06-30 的訂單訓練。只適用於這兩家飯店的資料結構與期間，不應套用到其他飯店。說明文字是同類訂單的歷史取消率（描述統計），不代表因果。</p>
+  <p class="howto"><b>怎麼用：</b>修改下方「主要欄位」，最下面會即時顯示這筆訂單的取消機率與說明；其他欄位收在「進階欄位」，不改也可以。</p>
+  <details><summary>詳細說明</summary><p class="note">示範模型：LightGBM（15 葉、100 棵），以 2015-07-01 至 2017-06-30 的訂單訓練。只適用於這兩家飯店的資料結構與期間，不應套用到其他飯店。說明文字是同類訂單的歷史取消率（描述統計），不代表因果。</p></details>
   <div class="card"><form id="f"></form></div>
   <div class="card result" id="out"></div>
 </section>
@@ -112,6 +120,12 @@ document.querySelectorAll("#tabs button").forEach(b => b.onclick = () => {
   b.classList.add("on"); $("#" + b.dataset.p).classList.add("on");
   try { localStorage.setItem("tab", b.dataset.p); } catch (e) {}
 });
+document.querySelectorAll("[data-go]").forEach(b => b.onclick = () => document.querySelector(`#tabs button[data-p="${b.dataset.go}"]`).click());
+const ZH = {"Online TA": "線上旅行社", "Offline TA/TO": "傳統旅行社", "Direct": "直接訂房", "Corporate": "企業", "Groups": "團體",
+  "Complementary": "招待", "Aviation": "航空", "Undefined": "未定義", "No Deposit": "無訂金", "Non Refund": "不退款", "Refundable": "可退款",
+  "Transient": "散客", "Transient-Party": "散客（同行）", "Contract": "合約", "Group": "團體",
+  "BB": "含早餐", "HB": "半膳", "FB": "全膳", "SC": "不含餐", "TA/TO": "旅行社", "GDS": "全球訂位系統"};
+const zh = v => ZH[v] ? `${v}（${ZH[v]}）` : v;
 const QS = new URLSearchParams(location.search);
 if (QS.get("theme")) document.documentElement.dataset.theme = QS.get("theme");
 try { const t = QS.get("tab") || localStorage.getItem("tab"); if (t) document.querySelector(`#tabs button[data-p="${t}"]`)?.click(); } catch (e) {}
@@ -161,9 +175,9 @@ function renderDaily() {
   $("#dstat").innerHTML = gen.length ? `${c ? `抵達前 ${c} 天仍有效的` : "當日"}一般訂單 ${gen.length} 筆，聯繫前 10%（${k} 筆）中有 <b>${topHit}</b> 筆實際取消（${pct(topHit / k, 0)}）；這些訂單的取消率 ${pct(genRate, 0)}。另有不退款 ${nr.length} 筆、團體 ${grp.length} 筆。`
     : "這一天沒有符合條件的訂單。";
   const cols = [{h: "#", f: (i, n) => n + 1, r: 1}, {h: "風險", f: i => `<div style="display:flex;gap:6px;align-items:center"><span style="width:44px;text-align:right">${pct(Lz.p[i], 0)}</span><div class="bar" style="flex:1"><i style="width:${Lz.p[i] * 100}%"></i></div></div>`},
-    {h: "飯店", f: i => Lz.hotel[i]}, {h: "前置天數", f: i => Lz.lead_time[i], r: 1}, {h: "市場區隔", f: i => Lz.market_segment[i]},
-    {h: "訂金", f: i => Lz.deposit_type[i]}, {h: "顧客類型", f: i => Lz.customer_type[i]}, {h: "晚數", f: i => Lz.total_nights[i], r: 1},
-    {h: "ADR", f: i => Lz.adr[i], r: 1}, {h: "實際結果（事後）", f: i => Lz.is_canceled[i] ? '<span class="yes">取消</span>' : '<span class="no">入住</span>'}];
+    {h: "飯店", f: i => Lz.hotel[i]}, {h: "前置天數", f: i => Lz.lead_time[i], r: 1}, {h: "市場區隔", f: i => zh(Lz.market_segment[i])},
+    {h: "訂金", f: i => zh(Lz.deposit_type[i])}, {h: "顧客類型", f: i => zh(Lz.customer_type[i])}, {h: "晚數", f: i => Lz.total_nights[i], r: 1},
+    {h: "ADR", f: i => Lz.adr[i], r: 1}, {h: "事後結果", f: i => Lz.is_canceled[i] ? '<span class="yes">取消</span>' : '<span class="no">入住</span>'}];
   const lim = a => a.slice(0, 60);
   $("#dgen").innerHTML = gen.length ? table(cols, lim(gen), (i, n) => n < k ? "top" : "") + (gen.length > 60 ? `<p class="note">僅顯示前 60 筆（共 ${gen.length} 筆）</p>` : "") : "—";
   $("#dnr").innerHTML = nr.length ? table(cols, lim(nr)) : "—";
@@ -186,9 +200,12 @@ const FIELDS = [
   ["previous_bookings_not_canceled", "過去未取消次數", "num", 0], ["booking_changes", "訂單修改次數", "num", 0],
   ["days_in_waiting_list", "候補天數", "num", 0], ["adr", "平均房價 ADR（€）", "num", 110], ["total_of_special_requests", "特殊需求數", "num", 0],
 ];
-$("#f").innerHTML = FIELDS.map(([k, h, t, v]) => `<label>${h}` + (t === "sel"
-  ? `<select name="${k}">${C[k].map(o => `<option${o === String(v) ? " selected" : ""}>${o}</option>`).join("")}</select>`
-  : `<input name="${k}" type="${t === "date" ? "date" : "number"}" value="${v}" ${t === "num" ? 'min="0" step="any"' : ""}>`) + "</label>").join("");
+const MAIN = ["hotel", "arrival", "lead_time", "market_segment", "deposit_type", "total_of_special_requests"];
+const fieldHtml = ([k, h, t, v]) => `<label>${h}` + (t === "sel"
+  ? `<select name="${k}">${C[k].map(o => `<option value="${o}"${o === String(v) ? " selected" : ""}>${zh(o)}</option>`).join("")}</select>`
+  : `<input name="${k}" type="${t === "date" ? "date" : "number"}" value="${v}" ${t === "num" ? 'min="0" step="any"' : ""}>`) + "</label>";
+$("#f").innerHTML = `<h3 style="margin-top:0">主要欄位</h3><div class="grid">${MAIN.map(k => fieldHtml(FIELDS.find(f => f[0] === k))).join("")}</div>
+  <details class="adv"><summary>進階欄位（共 ${FIELDS.length - MAIN.length} 項，可不改）</summary><div class="grid">${FIELDS.filter(f => !MAIN.includes(f[0])).map(fieldHtml).join("")}</div></details>`;
 const LEAD = [[7, "0–7 天"], [30, "8–30 天"], [90, "31–90 天"], [180, "91–180 天"], [1e9, "180 天以上"]];
 function runOne() {
   const fd = Object.fromEntries(new FormData($("#f")).entries());
@@ -204,8 +221,8 @@ function runOne() {
   const lead = LEAD.find(([u]) => num("lead_time") <= u)[1];
   const pc = num("previous_cancellations") > 0 ? "有" : "無", sr = num("total_of_special_requests") > 0 ? "有" : "無";
   const facts = [
-    ["訂金類型", fd.deposit_type, S.deposit_type[fd.deposit_type], fd.deposit_type],
-    ["市場區隔", fd.market_segment, S.market_segment[fd.market_segment], fd.market_segment],
+    ["訂金類型", zh(fd.deposit_type), S.deposit_type[fd.deposit_type], ZH[fd.deposit_type] || fd.deposit_type],
+    ["市場區隔", zh(fd.market_segment), S.market_segment[fd.market_segment], ZH[fd.market_segment] || fd.market_segment],
     ["前置天數", lead, S.lead[lead], "前置 " + lead],
     ["過去取消紀錄", pc, S.prev_cancel[pc], pc === "有" ? "曾取消過" : "無取消紀錄"],
     ["特殊需求", sr, S.special[sr], sr === "有" ? "有特殊需求" : "無特殊需求"],

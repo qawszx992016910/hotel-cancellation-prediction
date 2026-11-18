@@ -49,9 +49,9 @@ TEST_JS = r"""
       if (rows("#dnr").length && rows("#dgrp").length) { day6 = dday; break; }
     }
     const g6 = rows("#dgen");
-    const nrOk = day6 && rows("#dnr").every(r => r.cells[5].innerText.trim() === "Non Refund")
-      && rows("#dgrp").every(r => r.cells[4].innerText.trim() === "Groups")
-      && g6.every(r => r.cells[5].innerText.trim() !== "Non Refund" && r.cells[4].innerText.trim() !== "Groups");
+    const nrOk = day6 && rows("#dnr").every(r => r.cells[5].innerText.trim().startsWith("Non Refund"))
+      && rows("#dgrp").every(r => r.cells[4].innerText.trim().startsWith("Groups"))
+      && g6.every(r => !r.cells[5].innerText.trim().startsWith("Non Refund") && !r.cells[4].innerText.trim().startsWith("Groups"));
     ok("F6", "不退款與團體訂單分列、不混入一般名單", nrOk, `${day6}：一般 ${g6.length}、不退款 ${rows("#dnr").length}、團體 ${rows("#dgrp").length} 筆`);
     $("#d").value = "2017-08-15"; $("#dh").value = "City Hotel";
     // F7 聯繫時點：越早聯繫仍有效的訂單越少或相等（含已取消的「當天」最多）
