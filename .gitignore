@@ -12,3 +12,4 @@
 /results/preds/
 /results/*stdout*.txt
 /code/fix_citations.py
+/code/build_final2_docx.py
