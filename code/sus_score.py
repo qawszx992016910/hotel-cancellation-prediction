@@ -24,9 +24,15 @@ def main():
             dict(item="SUS 平均", value=round(d.sus.mean(), 1)),
             dict(item="SUS 標準差", value=round(d.sus.std(), 1)),
             dict(item="SUS 最低／最高", value=f"{d.sus.min():.1f}／{d.sus.max():.1f}")]
+    if "hotel_exp" in d:
+        rows.append(dict(item="有飯店／訂房工作經驗", value=f"{d.hotel_exp.sum()}/{len(d)}"))
     for t in ("T1", "T2", "T3"):
         rows.append(dict(item=f"{t} 完成率", value=f"{d[t + '_done'].sum()}/{len(d)}"))
-        rows.append(dict(item=f"{t} 完成者平均秒數", value=round(d.loc[d[t + '_done'] == 1, t + "_sec"].mean(), 1)))
+        if t + "_sec" in d:
+            rows.append(dict(item=f"{t} 完成者平均秒數", value=round(d.loc[d[t + '_done'] == 1, t + "_sec"].mean(), 1)))
+    if "total_min" in d:
+        rows.append(dict(item="三任務自報總時間平均（分鐘）", value=round(d.total_min.mean(), 1)))
+        rows.append(dict(item="三任務自報總時間最短／最長（分鐘）", value=f"{d.total_min.min():g}／{d.total_min.max():g}"))
     s = pd.DataFrame(rows)
     s.to_csv(OUT / "sus_summary.csv", index=False, encoding="utf-8-sig")
     print(s.to_string(index=False))

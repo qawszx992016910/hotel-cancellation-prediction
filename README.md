@@ -33,6 +33,7 @@ python code/final_08_ablation.py         # 消融實驗：門檻 0.5、期中設
 python code/final_09_e4_accuracy.py      # 期中時間切分（驗證集選定門檻）的 Accuracy
 python code/demo_functional_test.py      # 網頁功能測試（無頭 Chrome，需先 build_demo.py）
 python code/demo_screenshots.py          # 報告圖 5-2、5-3 網頁截圖
+python code/sus_convert.py "<Google 表單回覆>.xlsx"  # 表單回覆 → data/sus_responses.csv（自動判定任務對錯）
 python code/sus_score.py                 # 使用者測試 SUS 計分（讀 data/sus_responses.csv）
 python code/booking_eval.py --data data/hotel_bookings.csv --out results/eval_report   # 評估工具
 python code/build_demo.py                # 產生 demo/index.html（單檔網頁展示）
@@ -60,7 +61,7 @@ python code/build_demo.py                # 產生 demo/index.html（單檔網頁
 | `code/make_framework_fig.py` | 報告圖 3-1 研究架構圖 |
 | `code/final_01_rolling_origin.py`～`final_06_contact_time.py` | 期末階段 1–5（06 為階段 4 補充） |
 | `code/final_07_explain.py`～`final_09_e4_accuracy.py` | 期末錯誤分析與 SHAP、消融實驗、表 4-1 補充欄位 |
-| `code/demo_functional_test.py`、`code/sus_score.py` | 系統功能測試與使用者測試計分 |
+| `code/demo_functional_test.py`、`code/sus_convert.py`、`code/sus_score.py` | 系統功能測試與使用者測試計分 |
 | `code/make_system_fig.py`、`code/make_framework_fig.py --final` | 系統架構圖、研究架構圖 |
 | `code/booking_eval.py` | 評估工具（單檔，可在 Colab 或命令列執行） |
 | `code/build_demo.py`、`demo_template.html`、`demo_model.js` | 網頁展示產生器與瀏覽器端推論 |
