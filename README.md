@@ -4,6 +4,10 @@ Hotel Booking Cancellation Prediction: A Leakage-Aware Evaluation with Temporal 
 
 人工智慧課程期中／期末專題（115 學年度第 1 學期）之程式與結果。報告中所有數字皆由本儲存庫的程式產生。
 
+## 展示影片
+
+網頁操作示範（約 3 分 30 秒）：[YouTube](https://youtu.be/rpSmC43sd-0)｜[Google 雲端備用](https://drive.google.com/file/d/1Q8r3qFWpoyNw91Z853_uxMgCDVO9W52L/view)
+
 ## 在 Colab 執行
 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/qawszx992016910/hotel-cancellation-prediction/blob/main/hotel_cancellation_colab.ipynb)
